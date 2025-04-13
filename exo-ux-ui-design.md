@@ -22,14 +22,14 @@ Différentes langues.
 
 1.3
 
-Utilisateur cible : Jeune adulte
-Âge : 20-30 ans
+Utilisateur cible : Personne lamba
+Âge : 20-45 ans
 Profession : Tout
 Objectif sur le site : Trouver rapidement le produit que l'on recherche
 Situation : L'utilisateur veut louer une voiture de sport pour s'amuser le week-end, tout seul ou entre amis, pour une occasion spéciale ou juste pour profiter du moment.
 
 Utilisateur cible : Entrepeneur
-Âge : 20-60 ans
+Âge : 25-60 ans
 Profession : Organisateur évènementiel
 Objectif sur le site : Trouver rapidement le produit que l'on recherche 
 Situation : L'utilisateur veut louer une ou un ensemble de voitures pour organiser des évènements tels que des mariages, des fêtes, etc. Il s'y connait sur ce qui marche et ce qui est adapté pour chaque évènement.
