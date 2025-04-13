@@ -25,14 +25,14 @@ Différentes langues.
 Utilisateur cible : Jeune adulte
 Âge : 20-30 ans
 Profession : Tout
-Objectif sur le site : Trouver rapidement ce que l'on recherche
+Objectif sur le site : Trouver rapidement le produit que l'on recherche
 Situation : L'utilisateur veut louer une voiture de sport pour s'amuser le week-end, tout seul ou entre amis, pour une occasion spéciale ou juste pour profiter du moment.
 
 Utilisateur cible : Entrepeneur
 Âge : 20-60 ans
 Profession : Organisateur évènementiel
-Objectif sur le site : Trouver rapidement ce que l'on recherche 
-Situation : L'utilisateur veut louer un ensemble de voitures pour organiser des évènements tels que des mariages, il s'y connait sur ce qui marche et ce qui est adapté pour chaque évènement.
+Objectif sur le site : Trouver rapidement le produit que l'on recherche 
+Situation : L'utilisateur veut louer une ou un ensemble de voitures pour organiser des évènements tels que des mariages, des fêtes, etc. Il s'y connait sur ce qui marche et ce qui est adapté pour chaque évènement.
 
 --
 
@@ -129,23 +129,26 @@ Scores de performance desktop : Performance : 97
 
 3.
 
-             Page d'accueil
-                    |
-      +-------------+------------+
-      |                          |
-   Services                   Contact
-      |
-   Voitures
-      |
-      +--------+-------+
-      |        |       |
-  Catégorie1   |    Catégorie3
-           Catégorie2
+                                Page d'accueil
+                                      |
+                                      |
+                        +-------------+------------+
+                        |                          |
+                    Services                   Contact
+                        |
+                        |
+           +------------+------------+
+           |            |            |
+       Voiture 1    Voiture 2    Voiture 3
+           |            |            |
+           +------------+------------+                   
+                        |
+                   Page détails 
 
 --
 
-4. Voir Figma
+4. Voir Figma/Github
 
 --
 
-5.
+5. Voir figma/Github
