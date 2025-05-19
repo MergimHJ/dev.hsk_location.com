@@ -1,14 +1,30 @@
 <?php
-
+   
 
 function catalog()
 {
-    echo ('services');
+    
+         require_once '../app/config/db.php';
+
+        $stmt = $pdo->query('SELECT * FROM car');
+        $cars = $stmt->fetchAll();
+        
+        
+        
+        $data['car'] = $cars;
+        render('catalog/catalog.php', $data);
+        
+
 
 }
 
-function item()
+function item($slug)
 {
-    echo ('page dune voiture');
-
+        
+         require_once '../app/config/db.php';
+        $stmt = $pdo->prepare('SELECT * FROM car WHERE slug = :slug');
+        $stmt->execute(['slug' => $slug]);
+        $data['car'] = $stmt->fetch();
+        render('catalog/item.php', $data);
 }
+

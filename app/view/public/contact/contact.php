@@ -1,25 +1,27 @@
 <?php
-if (isset($data['message'])) {
-    echo '<p>' . $data['message'] . '</p>';
+// Vérifiez si $data existe avant d'essayer d'y accéder
+if(isset($data) && is_array($data)) {
+    echo '<div class="alert alert-success">
+            <strong>Merci pour votre message!</strong> ' . $data['message'] . '
+          </div>';
 }
-
 ?>
 
-<form action="/contact/send" method="POST">
+<form method="post" action="">
     <div class="form-group">
         <label for="name">Name</label>
-        <input type="text" name="name" class="form-control" placeholder="Enter your name" value="<?= $data['post_data']["name"]; ?>">
+        <input type="text" class="form-control" id="name" name="name" value="<?php echo isset($data['name']) ? $data['name'] : ''; ?>">
     </div>
-
+    
     <div class="form-group">
         <label for="email">Email</label>
-        <input type="text" name="email" class="form-control" placeholder="Enter your email" value="<?= $data['post_data']["email"]; ?>">
+        <input type="email" class="form-control" id="email" name="email" value="<?php echo isset($data['email']) ? $data['email'] : ''; ?>">
     </div>
-
+    
     <div class="form-group">
         <label for="message">Message</label>
-        <textarea name="message" class="form-control" rows="4" placeholder="Enter your message"><?= $data['post_data']["message"]; ?></textarea>
+        <textarea class="form-control" id="message" name="message" rows="5"><?php echo isset($data['message']) ? $data['message'] : ''; ?></textarea>
     </div>
-
+    
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>

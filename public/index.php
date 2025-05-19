@@ -23,6 +23,11 @@ if (empty($uri_parts[1])) {
     $action = $uri_parts[1];
 }
 
+$slug = null;
+if (!empty($uri_parts[2])) {
+    $slug = $uri_parts[2];
+} 
+
 $controller_path = SITE_ROOT . "app/controller/public/$controller.php";
 
 // var_dump($controller_path);
@@ -33,7 +38,7 @@ $failedToLoad = false;
 if (file_exists($controller_path)) {
     include $controller_path;
     if(function_exists($action)){
-        call_user_func($action);
+        call_user_func($action, $slug);
     } else {
         $failedToLoad = true;
     }

@@ -1,0 +1,389 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #EFE9F4;
+  color: #484D6D;
+  line-height: 1.6;
+}
+
+/* VARIABLES DE COULEURS */
+:root {
+  --primary-dark: #484D6D;
+  --primary-light: #EFE9F4;
+  --accent: #EE6352;
+  --bg-light: #FAF6DD;
+  --text-light: #FAF6DD;
+}
+
+/* NAVBAR */
+.navbar {
+  background-color: var(--primary-dark);
+  padding: 10px;
+  text-align: center;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.navbar li {
+  display: inline-block;
+}
+
+.navbar a {
+  color: var(--text-light);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 5px 10px;
+  border: 1px solid var(--text-light);
+  border-radius: 3px;
+}
+
+.navbar a:hover {
+  background-color: var(--text-light);
+  color: var(--primary-dark);
+}
+
+/* SECTION COMMUNE */
+section {
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* HERO */
+.hero {
+  background-color: var(--primary-dark);
+  background-image: url('/assets/car-design-background-img.jpg');
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: overlay;
+  color: var(--text-light);
+  text-align: center;
+  padding: 60px 20px;
+  position: relative;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+}
+
+.logo-container {
+  background-color: white;
+  display: inline-block;
+  padding: 5px 20px;
+  border-radius: 3px;
+}
+
+.logo-text {
+  font-family: 'Pacifico', cursive;
+  font-size: 1.8rem;
+  color: black;
+}
+
+.cta-button {
+  background-color: var(--accent);
+  color: white;
+  padding: 8px 25px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.cta-button:hover {
+  opacity: 0.9;
+}
+
+/* PRÉSENTATION */
+.presentation {
+  padding: 40px 20px;
+  background-color: var(--primary-light);
+}
+
+.presentation h2 {
+  font-size: 1.8rem;
+  margin-bottom: 30px;
+}
+
+.presentation-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.presentation-text {
+  flex: 1 1 45%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.presentation-image {
+  flex: 1 1 45%;
+}
+
+.presentation-image img {
+  width: 100%;
+  max-height: 350px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+/* VOITURES (SERVICES) */
+.services {
+  background-color: var(--primary-dark);
+  padding: 40px 0;
+  max-width: 100%;
+}
+
+.cases {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  padding: 0 15px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.cases article {
+  background-color: var(--bg-light);
+  border-radius: 5px;
+  overflow: hidden;
+  border: 3px solid var(--bg-light);
+}
+
+.car-info {
+  padding: 15px;
+}
+
+.cases article h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.cases article img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.cases article p {
+  font-size: 0.85rem;
+}
+
+/* INFO SECTIONS (AVIS ET POURQUOI NOUS) */
+.info-sections {
+  display: flex;
+  gap: 30px;
+  padding: 30px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: var(--primary-light);
+}
+
+.testimonials, .why-us {
+  flex: 1;
+  padding: 20px 0;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.section-header h2 {
+  display: inline-block;
+  background-color: var(--accent);
+  color: white;
+  padding: 8px 25px;
+  border-radius: 5px;
+  font-size: 1.2rem;
+}
+
+.testimonial-list, .features-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.testimonial-list li, .features-list li {
+  background-color: white;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.testimonial-list li p {
+  font-style: italic;
+}
+
+/* FOOTER */
+.footer {
+  background-color: var(--primary-dark);
+  color: var(--text-light);
+  text-align: center;
+  padding: 30px 20px;
+}
+
+.social-links ul,
+.legal-links ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 15px;
+}
+
+.footer a {
+  color: var(--text-light);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.copyright {
+  margin-top: 20px;
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .navbar ul {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .presentation-content {
+    flex-direction: column;
+  }
+
+  .cases {
+    grid-template-columns: 1fr;
+  }
+
+  .info-sections {
+    flex-direction: column;
+  }
+
+  .social-links ul,
+  .legal-links ul {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .cases {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* GRILLE DES VOITURES */
+section:has(.card) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 60px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* CARTE INDIVIDUELLE */
+.card {
+  background-color: white;
+  border: 2px solid #484D6D;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
+/* IMAGE */
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* CONTENU TEXTE */
+.card .card-body {
+  padding: 20px;
+  flex: 1;
+}
+
+.card .card-body h3 {
+  font-size: 1.4rem;
+  color: #484D6D;
+  margin-bottom: 10px;
+}
+
+.card .card-body p {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+/* BOUTON RÉSERVER */
+.card .card-body a {
+  display: inline-block;
+  background-color: #EE6352;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.card .card-body a:hover {
+  background-color: #d54c3e;
+}
+
+/* TAG DISPONIBILITÉ */
+.card .badge {
+  background-color: #FAF6DD;
+  color: #484D6D;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 50px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+/* RESPONSIVE SPÉCIFIQUE */
+@media (max-width: 768px) {
+  section:has(.card) {
+    grid-template-columns: 1fr;
+  }
+}

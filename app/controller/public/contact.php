@@ -3,7 +3,7 @@
 
 function contact()
 {
-    render('contact/contact.php');
+    render('contact/contact.php', []);
 }
 
 
