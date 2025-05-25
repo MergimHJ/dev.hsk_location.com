@@ -1,9 +1,9 @@
 <?php
 
-function render($partial, $data = []): void
+function render($partial, $data = [], $zone='public'): void
 {
-    $skeletonPath = SITE_ROOT . 'app/view/public/skeleton.html';
-    $partialPath = SITE_ROOT . "app/view/public/$partial";
+    $skeletonPath = SITE_ROOT . "app/view/$zone/skeleton.html";
+    $partialPath = SITE_ROOT . "app/view/$zone/$partial";
     if (!file_exists($skeletonPath) || !file_exists($partialPath)) {
         http_response_code(500);
         echo "Template not found.";
