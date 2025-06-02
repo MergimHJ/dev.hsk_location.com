@@ -1,23 +1,5 @@
--- ---------------------------------------------------------------------
--- Consolidation du schéma : CREATE TABLEs sans PK/FK/index,
--- puis ALTER TABLE pour ajouter PK, FK et index séparément.
--- ---------------------------------------------------------------------
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- 1) Création des tables (définition des colonnes uniquement)
---
-
 CREATE TABLE `operator` (
-  `id` INT UNSIGNED AUTO_INCREMENT,
+  `id` INT UNSIGNED,
   `username` VARCHAR(50) NOT NULL,
   `password` VARCHAR(255) NOT NULL COMMENT 'Hashed with password_hash()',
   `email` VARCHAR(100) NOT NULL,
@@ -28,7 +10,7 @@ CREATE TABLE `operator` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `visitor` (
-  `id` INT UNSIGNED AUTO_INCREMENT,
+  `id` INT UNSIGNED,
   `visitor_token` VARCHAR(255) NOT NULL COMMENT 'Session or cookie-based identifier',
   `ip_address` VARCHAR(45) NULL,
   `user_agent` TEXT NULL,
@@ -40,7 +22,7 @@ CREATE TABLE `visitor` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `tag` (
-  `id` INT UNSIGNED AUTO_INCREMENT,
+  `id` INT UNSIGNED,
   `name` VARCHAR(50) NOT NULL,
   `slug` VARCHAR(50) NOT NULL,
   `type` ENUM('feature','category','theme','custom') DEFAULT 'custom',
@@ -51,7 +33,7 @@ CREATE TABLE `tag` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `brand` (
-  `id` INT UNSIGNED AUTO_INCREMENT,
+  `id` INT UNSIGNED,
   `name` VARCHAR(100) NOT NULL,
   `slug` VARCHAR(100) NOT NULL,
   `logo` VARCHAR(255) NULL COMMENT 'Path to brand logo',
@@ -60,7 +42,7 @@ CREATE TABLE `brand` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `car` (
-  `id` INT UNSIGNED AUTO_INCREMENT,
+  `id` INT UNSIGNED,
   `operator_id` INT UNSIGNED NOT NULL,
   `brand_id` INT UNSIGNED NOT NULL,
   `category_tag_id` INT UNSIGNED NOT NULL COMMENT 'Tag pour la catégorie (SUV, berline, etc.)',
@@ -97,7 +79,7 @@ CREATE TABLE `car_tag` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `collection` (
-  `id` INT UNSIGNED AUTO_INCREMENT,
+  `id` INT UNSIGNED,
   `operator_id` INT UNSIGNED NOT NULL COMMENT 'Opérateur propriétaire de la collection',
   `title` VARCHAR(100) NOT NULL COMMENT 'Ex: Nouveautés, Coup de cœur, etc.',
   `slug` VARCHAR(100) NOT NULL COMMENT 'Utilisable dans l''URL ou pour requêtes',
@@ -115,7 +97,7 @@ CREATE TABLE `collection_car` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `customer` (
-  `id` INT UNSIGNED AUTO_INCREMENT,
+  `id` INT UNSIGNED,
   `first_name` VARCHAR(50) NOT NULL,
   `last_name` VARCHAR(50) NOT NULL,
   `email` VARCHAR(100) NOT NULL,
@@ -134,7 +116,7 @@ CREATE TABLE `customer` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `booking` (
-  `id` INT UNSIGNED AUTO_INCREMENT,
+  `id` INT UNSIGNED,
   `booking_number` VARCHAR(20) NOT NULL,
   `customer_id` INT UNSIGNED NOT NULL,
   `car_id` INT UNSIGNED NOT NULL,
@@ -150,7 +132,7 @@ CREATE TABLE `booking` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `payment` (
-  `id` INT UNSIGNED AUTO_INCREMENT,
+  `id` INT UNSIGNED,
   `booking_id` INT UNSIGNED NOT NULL,
   `amount` DECIMAL(10,2) NOT NULL,
   `payment_method` ENUM('credit_card','bank_transfer','cash','other') NOT NULL,
@@ -162,7 +144,7 @@ CREATE TABLE `payment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `search` (
-  `id` INT UNSIGNED AUTO_INCREMENT,
+  `id` INT UNSIGNED,
   `visitor_id` INT UNSIGNED NULL,
   `query` VARCHAR(255) NOT NULL,
   `results_count` INT UNSIGNED DEFAULT 0,
@@ -171,7 +153,7 @@ CREATE TABLE `search` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `review` (
-  `id` INT UNSIGNED AUTO_INCREMENT,
+  `id` INT UNSIGNED,
   `customer_id` INT UNSIGNED NOT NULL,
   `car_id` INT UNSIGNED NOT NULL,
   `booking_id` INT UNSIGNED NULL,
@@ -184,7 +166,7 @@ CREATE TABLE `review` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE `message` (
-  `id` INT UNSIGNED AUTO_INCREMENT,
+  `id` INT UNSIGNED,
   `name` VARCHAR(100) NOT NULL,
   `email` VARCHAR(100) NOT NULL,
   `subject` VARCHAR(255) NOT NULL,
