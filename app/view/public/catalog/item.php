@@ -130,7 +130,7 @@
                         </div>
                         <div class="item-spec-item">
                             <span class="item-spec-label">Carrosserie</span>
-                            <span class="item-spec-value"><?= $data['car']['carrosserie'];?></span>
+                            <span class="item-spec-value"><?= $data['car']['category_tag_id'];?></span>
                         </div>
                     </div>
                 </div>

@@ -30,3 +30,4 @@ function item($slug)
         render('catalog/item.php', $data);
 }
 
+
