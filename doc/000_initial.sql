@@ -178,40 +178,46 @@ CREATE TABLE `message` (
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `read_at` TIMESTAMP NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 --
 -- 2) Ajout des PK, UNIQ, INDEX et FK via ALTER TABLE
 --
 
 -- Table operator
 ALTER TABLE `operator`
+  MODIFY COLUMN `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `uniq_operator_username` (`username`),
   ADD UNIQUE KEY `uniq_operator_email` (`email`);
 
 -- Table visitor
 ALTER TABLE `visitor`
+  MODIFY COLUMN `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `uniq_visitor_token` (`visitor_token`);
 
 -- Table tag
 ALTER TABLE `tag`
+  MODIFY COLUMN `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `uniq_tag_name` (`name`),
   ADD UNIQUE KEY `uniq_tag_slug` (`slug`),
-  ADD KEY `idx_tag_parent_id` (`parent_id`),
   ADD KEY `idx_tag_operator_id` (`operator_id`),
-  ADD CONSTRAINT `fk_tag_parent` FOREIGN KEY (`parent_id`) REFERENCES `tag` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `fk_tag_operator` FOREIGN KEY (`operator_id`) REFERENCES `operator` (`id`) ON DELETE SET NULL;
 
 -- Table brand
 ALTER TABLE `brand`
+  MODIFY COLUMN `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `uniq_brand_name` (`name`),
   ADD UNIQUE KEY `uniq_brand_slug` (`slug`);
 
 -- Table car
 ALTER TABLE `car`
+  MODIFY COLUMN `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `uniq_car_slug` (`slug`),
   ADD KEY `idx_car_operator_id` (`operator_id`),
@@ -231,6 +237,8 @@ ALTER TABLE `car_tag`
 
 -- Table collection
 ALTER TABLE `collection`
+  MODIFY COLUMN `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `uniq_collection_slug` (`slug`),
   ADD KEY `idx_collection_operator_id` (`operator_id`),
@@ -245,11 +253,15 @@ ALTER TABLE `collection_car`
 
 -- Table customer
 ALTER TABLE `customer`
+  MODIFY COLUMN `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `uniq_customer_email` (`email`);
 
 -- Table booking
 ALTER TABLE `booking`
+  MODIFY COLUMN `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `uniq_booking_number` (`booking_number`),
   ADD KEY `idx_booking_customer_id` (`customer_id`),
@@ -259,18 +271,24 @@ ALTER TABLE `booking`
 
 -- Table payment
 ALTER TABLE `payment`
+  MODIFY COLUMN `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+
   ADD PRIMARY KEY (`id`),
   ADD KEY `idx_payment_booking_id` (`booking_id`),
   ADD CONSTRAINT `fk_payment_booking` FOREIGN KEY (`booking_id`) REFERENCES `booking` (`id`) ON DELETE RESTRICT;
 
 -- Table search
 ALTER TABLE `search`
+  MODIFY COLUMN `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+
   ADD PRIMARY KEY (`id`),
   ADD KEY `idx_search_visitor_id` (`visitor_id`),
   ADD CONSTRAINT `fk_search_visitor` FOREIGN KEY (`visitor_id`) REFERENCES `visitor` (`id`) ON DELETE SET NULL;
 
 -- Table review
 ALTER TABLE `review`
+  MODIFY COLUMN `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+
   ADD PRIMARY KEY (`id`),
   ADD KEY `idx_review_customer_id` (`customer_id`),
   ADD KEY `idx_review_car_id` (`car_id`),
@@ -281,12 +299,8 @@ ALTER TABLE `review`
 
 -- Table message
 ALTER TABLE `message`
+  MODIFY COLUMN `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+
   ADD PRIMARY KEY (`id`),
   ADD KEY `idx_message_operator_id` (`operator_id`),
   ADD CONSTRAINT `fk_message_operator` FOREIGN KEY (`operator_id`) REFERENCES `operator` (`id`) ON DELETE SET NULL;
-
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
