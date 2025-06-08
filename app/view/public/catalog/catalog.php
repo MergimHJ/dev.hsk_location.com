@@ -98,15 +98,7 @@
                      data-price="<?= $car['price'] ?>"
                      data-year="<?= $car['year'] ?>"
                      style="position: relative; opacity: 0; transform: translateY(30px); transition: all 0.6s ease;">
-                
-                <!-- Badge de disponibilité -->
-                <?php if (isset($car['availability_text'])): ?>
-                    <div class="availability-badge" style="position: absolute; top: 15px; right: 15px; z-index: 2;">
-                        <span style="background: <?= $car['availability_class'] === 'available' ? '#28a745' : ($car['availability_class'] === 'limited' ? '#ffc107' : '#dc3545') ?>; color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
-                            <?= $car['availability_text'] ?>
-                        </span>
-                    </div>
-                <?php endif; ?>
+
                 
                 <!-- Badge "Nouveau" -->
                 <?php if (isset($car['created_at']) && (time() - strtotime($car['created_at'])) < 604800): ?>
