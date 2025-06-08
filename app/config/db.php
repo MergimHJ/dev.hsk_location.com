@@ -4,8 +4,8 @@ function db() {
     if ($pdo === null) {
         $host = 'localhost';
         $db   = 'hsk_location';
-        $user = 'hsk_location';
-        $pass = 'sandbox';
+        $user = 'root';
+        $pass = '';
         $charset = 'utf8mb4';
 
         $dsn = "mysql:host=$host;dbname=$db;charset=$charset";

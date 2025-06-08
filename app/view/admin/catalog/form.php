@@ -92,12 +92,14 @@
 
             <div>
                 <label for="theme_tag_id">Theme Tag ID *</label>
-                <input type="number"
-                    id="theme_tag_id"
-                    name="theme_tag_id"
-                    value="<?= htmlspecialchars($data['car']['theme_tag_id'] ?? '') ?>"
-                    required
-                    min="1">
+                <select name="theme_tag_id" required>
+                    <?php foreach ($data['themes'] as $category): ?>
+                        <option value="<?= $category['id'] ?>" <?= isset($data['car']['theme_tag_id']) && $data['car']['theme_tag_id'] == $category['id'] ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($category['name']) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+        
                 <small>Tag for theme (wedding, business, etc.)</small>
             </div>
 
