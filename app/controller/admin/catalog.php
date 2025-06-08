@@ -2,7 +2,6 @@
 
 function catalog()
 {
-
     $cars = db()->query('SELECT * FROM car')->fetchAll();
     $categories = db()->query('SELECT * FROM tag WHERE type = "category"')->fetchAll();
     $themes = db()->query('SELECT * FROM tag WHERE type = "theme"')->fetchAll();
@@ -33,8 +32,6 @@ function edit($id)
         exit;
     }
 
-    $isEdit = isset($car) && !empty($car['id']);
-
     $categories = db()->query('SELECT * FROM tag WHERE type = "category"')->fetchAll();
     $themes = db()->query('SELECT * FROM tag WHERE type = "theme"')->fetchAll();
 
@@ -52,7 +49,7 @@ function save()
 
 function update()
 {
-    global $pdo;
+    $pdo = db(); // Corrigé: utilise la fonction db()
 
     try {
         $stmt = $pdo->prepare("
@@ -84,9 +81,8 @@ function update()
         WHERE id = :id
     ");
 
-        // Remplir les paramètres (depuis $_POST par exemple)
         $stmt->execute([
-            ':id' => $_POST['id'],  // ⚠️ À inclure via champ caché dans ton formulaire
+            ':id' => $_POST['id'],
             ':operator_id' => $_POST['operator_id'],
             ':brand_id' => $_POST['brand_id'],
             ':category_tag_id' => $_POST['category_tag_id'],
@@ -113,15 +109,17 @@ function update()
             ':price' => $_POST['price']
         ]);
 
-        echo "✅ Voiture mise à jour avec succès !";
+        header('Location: /admin/catalog?success=updated');
+        exit;
     } catch (PDOException $e) {
-        echo "❌ Erreur lors de la mise à jour : " . $e->getMessage();
+        header('Location: /admin/catalog?error=' . urlencode($e->getMessage()));
+        exit;
     }
 }
 
 function create()
 {
-    global $pdo;
+    $pdo = db(); // Corrigé: utilise la fonction db()
 
     $car = [
         'operator_id' => $_POST['operator_id'] ?? 1,
@@ -132,6 +130,7 @@ function create()
         'title' => $_POST['title'] ?? '',
         'slug' => $_POST['slug'] ?? '',
         'description' => $_POST['description'] ?? null,
+        'content' => $_POST['content'] ?? null,
         'year' => $_POST['year'] ?? 2023,
         'seats' => $_POST['seats'] ?? 2,
         'doors' => $_POST['doors'] ?? 2,
@@ -153,7 +152,7 @@ function create()
         $stmt = $pdo->prepare("
         INSERT INTO car (
             operator_id, brand_id, category_tag_id, theme_tag_id,
-            model, title, slug, description,
+            model, title, slug, description, content,
             year, seats, doors, transmission, fuel_type,
             horsepower, top_speed, acceleration,
             cylinders, deposit, stock, status,
@@ -161,7 +160,7 @@ function create()
         )
         VALUES (
             :operator_id, :brand_id, :category_tag_id, :theme_tag_id,
-            :model, :title, :slug, :description,
+            :model, :title, :slug, :description, :content,
             :year, :seats, :doors, :transmission, :fuel_type,
             :horsepower, :top_speed, :acceleration,
             :cylinders, :deposit, :stock, :status,
@@ -170,22 +169,11 @@ function create()
     ");
 
         $stmt->execute($car);
-        echo "✅ Voiture enregistrée avec succès !";
+        
+        header('Location: /admin/catalog?success=created');
+        exit;
     } catch (PDOException $e) {
-        echo "❌ Erreur : " . $e->getMessage();
-    }
-
-    // Redirection après l'action
-    $action = $_POST['action'] ?? 'save';
-
-    if ($action === 'save_and_continue') {
-        header('Location: /admin/catalog/edit/' . ($car['id'] ?? $pdo->lastInsertId()));
-        exit;
-    } elseif ($action === 'save_and_new') {
-        header('Location: /admin/catalog/create');
-        exit;
-    } else {
-        header('Location: /admin/catalog');
+        header('Location: /admin/catalog?error=' . urlencode($e->getMessage()));
         exit;
     }
 }
@@ -203,9 +191,31 @@ function addcategory()
         'type' => $_POST['type'] ?? 'category'
     ];
 
-    db()->prepare('INSERT INTO tag (name, slug, type, parent_id, operator_id) 
-            VALUES (:name, :slug, :type, NULL, NULL)')
-        ->execute($tag);
+    try {
+        db()->prepare('INSERT INTO tag (name, slug, type, parent_id, operator_id) 
+                VALUES (:name, :slug, :type, NULL, NULL)')
+            ->execute($tag);
+        
+        header('Location: /admin/catalog/category?success=created');
+        exit;
+    } catch (PDOException $e) {
+        header('Location: /admin/catalog/category?error=' . urlencode($e->getMessage()));
+        exit;
+    }
+}
 
-    header('Location: /admin/catalog/add');
+function delete()
+{
+    if (isset($_POST['id'])) {
+        try {
+            $stmt = db()->prepare('DELETE FROM car WHERE id = :id');
+            $stmt->execute([':id' => $_POST['id']]);
+            
+            header('Location: /admin/catalog?success=deleted');
+            exit;
+        } catch (PDOException $e) {
+            header('Location: /admin/catalog?error=' . urlencode($e->getMessage()));
+            exit;
+        }
+    }
 }

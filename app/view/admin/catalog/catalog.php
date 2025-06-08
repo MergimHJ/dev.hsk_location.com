@@ -1,4 +1,25 @@
 <?php extract($data); ?>
+
+<!-- Messages de succès/erreur -->
+<?php if (isset($_GET['success'])): ?>
+    <div class="alert alert-success">
+        <?php
+        switch ($_GET['success']) {
+            case 'created': echo '✅ Voiture créée avec succès !'; break;
+            case 'updated': echo '✅ Voiture mise à jour avec succès !'; break;
+            case 'deleted': echo '✅ Voiture supprimée avec succès !'; break;
+            default: echo '✅ Action réalisée avec succès !';
+        }
+        ?>
+    </div>
+<?php endif; ?>
+
+<?php if (isset($_GET['error'])): ?>
+    <div class="alert alert-danger">
+        ❌ Erreur : <?= htmlspecialchars($_GET['error']); ?>
+    </div>
+<?php endif; ?>
+
 <header>
      <h1>Catalog Management</h1>
      <p>Manage your cars, categories, and themes</p>
@@ -23,7 +44,7 @@
      <section id="cars-section">
          <header class="section-header">
              <h2 class="section-title">Cars</h2>
-             <a href="/admin/cars/create" class="btn btn-primary">Add New Car</a>
+             <a href="/admin/catalog/add" class="btn btn-primary">Add New Car</a>
          </header>
 
          <div class="stats">
@@ -57,8 +78,8 @@
                      <?php foreach ($cars as $car): ?>
                          <tr>
                              <td>
-                                 <?php if ($car['image']): ?>
-                                     <img src="<?= htmlspecialchars($car['image']) ?>"
+                                 <?php if (!empty($car['image'])): ?>
+                                     <img src="/assets/cars/<?= $car['slug']; ?>/<?= $car['image']; ?>"
                                          alt="<?= htmlspecialchars($car['title']) ?>"
                                          class="car-image">
                                  <?php else: ?>
@@ -96,7 +117,11 @@
                                  </small>
                              </td>
                              <td>
-                                 <small><?= date('M j, Y', strtotime($car['created_at'])) ?></small>
+                                 <?php if (isset($car['created_at'])): ?>
+                                     <small><?= date('M j, Y', strtotime($car['created_at'])) ?></small>
+                                 <?php else: ?>
+                                     <small>-</small>
+                                 <?php endif; ?>
                              </td>
                              <td>
                                  <a href="/admin/catalog/edit/<?= $car['id'] ?>" class="btn btn-edit btn-sm">Edit</a>
@@ -114,7 +139,7 @@
      <section id="categories-section" class="hidden">
          <header class="section-header">
              <h2 class="section-title">Categories</h2>
-             <a href="/admin/tags/create?type=category" class="btn btn-primary">Add New Category</a>
+             <a href="/admin/catalog/category" class="btn btn-primary">Add New Category</a>
          </header>
 
          <div class="table-container">
@@ -133,7 +158,6 @@
                  <tbody>
                      <?php foreach ($categories as $category): ?>
                          <?php
-                            // Count cars using this category
                             $carsUsingCategory = array_filter($cars, fn($car) => $car['category_tag_id'] == $category['id']);
                             $carCount = count($carsUsingCategory);
                             ?>
@@ -158,10 +182,13 @@
                                  </span>
                              </td>
                              <td>
-                                 <small><?= date('M j, Y', strtotime($category['created_at'])) ?></small>
+                                 <?php if (isset($category['created_at'])): ?>
+                                     <small><?= date('M j, Y', strtotime($category['created_at'])) ?></small>
+                                 <?php else: ?>
+                                     <small>-</small>
+                                 <?php endif; ?>
                              </td>
                              <td>
-                                 <a href="/admin/tags/edit/<?= $category['id'] ?>" class="btn btn-edit btn-sm">Edit</a>
                                  <button onclick="deleteTag(<?= $category['id'] ?>, '<?= htmlspecialchars($category['name'], ENT_QUOTES) ?>', 'category', <?= $carCount ?>)"
                                      class="btn btn-delete btn-sm" <?= $carCount > 0 ? 'title="Cannot delete: category is being used by cars"' : '' ?>>
                                      Delete
@@ -178,7 +205,7 @@
      <section id="themes-section" class="hidden">
          <header class="section-header">
              <h2 class="section-title">Themes</h2>
-             <a href="/admin/tags/create?type=theme" class="btn btn-primary">Add New Theme</a>
+             <a href="/admin/catalog/category" class="btn btn-primary">Add New Theme</a>
          </header>
 
          <div class="table-container">
@@ -197,7 +224,6 @@
                  <tbody>
                      <?php foreach ($themes as $theme): ?>
                          <?php
-                            // Count cars using this theme
                             $carsUsingTheme = array_filter($cars, fn($car) => $car['theme_tag_id'] == $theme['id']);
                             $carCount = count($carsUsingTheme);
                             ?>
@@ -222,10 +248,13 @@
                                  </span>
                              </td>
                              <td>
-                                 <small><?= date('M j, Y', strtotime($theme['created_at'])) ?></small>
+                                 <?php if (isset($theme['created_at'])): ?>
+                                     <small><?= date('M j, Y', strtotime($theme['created_at'])) ?></small>
+                                 <?php else: ?>
+                                     <small>-</small>
+                                 <?php endif; ?>
                              </td>
                              <td>
-                                 <a href="/admin/tags/edit/<?= $theme['id'] ?>" class="btn btn-edit btn-sm">Edit</a>
                                  <button onclick="deleteTag(<?= $theme['id'] ?>, '<?= htmlspecialchars($theme['name'], ENT_QUOTES) ?>', 'theme', <?= $carCount ?>)"
                                      class="btn btn-delete btn-sm" <?= $carCount > 0 ? 'title="Cannot delete: theme is being used by cars"' : '' ?>>
                                      Delete
