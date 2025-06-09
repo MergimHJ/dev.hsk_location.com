@@ -43,3 +43,4 @@ function home()
     
     render('home/home.php', $data);
 }
+
