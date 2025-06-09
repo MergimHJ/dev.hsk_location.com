@@ -39,7 +39,13 @@ body {
     #f5cc48 50%,
     transparent 75%
   );
+  transition: all 0.3s ease;
 }
+
+input, textarea, select {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
 
 .navbar ul {
   list-style: none;
@@ -231,9 +237,7 @@ section {
   padding: 20px 15px;
   text-align: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease;
-  
-  
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
@@ -246,6 +250,7 @@ section {
   object-fit: cover;
   border-radius: 5px;
   margin-bottom: 15px;
+  transition: transform 0.3s ease;
 }
 
 .car-title {
@@ -1147,5 +1152,286 @@ section:has(.card) {
            /* ---------------------------------------------------------------------------------------------------------- */ 
             /* ---------------------------------------------------------------------------------------------------------- */ 
              /* ---------------------------------------------------------------------------------------------------------- */ 
-             
-             
+ 
+/* ============================================
+   DARK MODE PROPRE ET ÉLÉGANT - HSK LOCATIONS
+   ============================================ */
+
+/* Bouton de toggle (gardé tel quel) */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  background: linear-gradient(135deg, var(--primary-dark), #e2c462);
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  box-shadow: 0 8px 25px rgba(197, 160, 39, 0.3);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(197, 160, 39, 0.4);
+}
+
+.theme-icon {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+/* ============================================
+   DARK MODE - COULEURS DOUCES ET ÉLÉGANTES
+   ============================================ */
+
+/* Body - Fond sombre mais pas noir pur */
+[data-theme="dark"] body {
+  background-color: #0d1117 !important;
+  color: #e6edf3 !important;
+  background-image: linear-gradient(
+    10deg,
+    transparent 40%,
+    rgba(197, 160, 39, 0.03) 50%,
+    transparent 60%
+  ) !important;
+}
+
+/* Hero - Fond sombre avec subtil gradient */
+[data-theme="dark"] .hero {
+  background-color: #161b22 !important;
+  background-image: linear-gradient(
+    10deg,
+    transparent 25%,
+    rgba(197, 160, 39, 0.08) 50%,
+    transparent 75%
+  ) !important;
+}
+
+/* Sections principales - Gris doux */
+[data-theme="dark"] .presentation {
+  background-color: #21262d !important;
+  box-shadow: inset 0 0 80px 45px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme="dark"] .info-sections {
+  background-color: #21262d !important;
+  color: #e6edf3 !important;
+  box-shadow: inset 0 10px 50px 35px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Cards - Contraste doux avec bordure dorée subtile */
+[data-theme="dark"] .card {
+  background-color: #30363d !important;
+  color: #e6edf3 !important;
+  border: 1px solid rgba(197, 160, 39, 0.2) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme="dark"] .card:hover {
+  background-color: #363c43 !important;
+  box-shadow: 0 12px 48px rgba(197, 160, 39, 0.1) !important;
+}
+
+/* Titres - Or doux pour la hiérarchie */
+[data-theme="dark"] .car-title {
+  color: #f9d71c !important;
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3 {
+  color: #f9d71c !important;
+}
+
+[data-theme="dark"] .services-header {
+  color: #f9d71c !important;
+  text-shadow: 0 2px 8px rgba(249, 215, 28, 0.3) !important;
+}
+
+[data-theme="dark"] .section-header h2 {
+  color: #f9d71c !important;
+}
+
+/* Textes - Gris clair pour la lisibilité */
+[data-theme="dark"] .car-description {
+  color: #c9d1d9 !important;
+}
+
+[data-theme="dark"] .car-price {
+  color: #ff6b6b !important;
+  font-weight: 600 !important;
+}
+
+/* Témoignages et features - Fond carte élégant */
+[data-theme="dark"] .testimonial-list li,
+[data-theme="dark"] .features-list li {
+  background-color: #30363d !important;
+  color: #e6edf3 !important;
+  border: 1px solid rgba(197, 160, 39, 0.15) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2) !important;
+}
+
+[data-theme="dark"] .testimonial-list li:hover,
+[data-theme="dark"] .features-list li:hover {
+  background-color: #363c43 !important;
+  transform: translateY(-2px) !important;
+}
+
+[data-theme="dark"] .testimonial-list li p,
+[data-theme="dark"] .features-list li p {
+  color: #c9d1d9 !important;
+}
+
+/* Boutons - Contraste parfait */
+[data-theme="dark"] .car-link {
+  background: linear-gradient(135deg, #f9d71c, #e6c547) !important;
+  color: #0d1117 !important;
+  font-weight: 600 !important;
+  box-shadow: 0 4px 16px rgba(249, 215, 28, 0.3) !important;
+}
+
+[data-theme="dark"] .car-link:hover {
+  background: linear-gradient(135deg, #ffd93d, #f9d71c) !important;
+  color: #0d1117 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 24px rgba(249, 215, 28, 0.4) !important;
+}
+
+[data-theme="dark"] .navbar a {
+  color: #0d1117 !important;
+  font-weight: 600 !important;
+}
+
+[data-theme="dark"] .navbar a:hover {
+  color: #0d1117 !important;
+  background-color: #ffd93d !important;
+}
+
+/* Formulaires - Design moderne */
+[data-theme="dark"] .contact-form {
+  background: linear-gradient(145deg, #21262d, #30363d) !important;
+  color: #e6edf3 !important;
+  border: 1px solid rgba(197, 160, 39, 0.2) !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme="dark"] .form-control {
+  background: #161b22 !important;
+  border: 2px solid rgba(197, 160, 39, 0.3) !important;
+  color: #e6edf3 !important;
+}
+
+[data-theme="dark"] .form-control:focus {
+  border-color: #f9d71c !important;
+  box-shadow: 0 0 0 3px rgba(249, 215, 28, 0.2) !important;
+}
+
+[data-theme="dark"] .form-control::placeholder {
+  color: #7d8590 !important;
+}
+
+[data-theme="dark"] .btn-submit {
+  background: linear-gradient(135deg, #f9d71c, #e6c547) !important;
+  color: #0d1117 !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="dark"] .btn-submit:hover {
+  background: linear-gradient(135deg, #ffd93d, #f9d71c) !important;
+  color: #0d1117 !important;
+}
+
+/* Info cards contact */
+[data-theme="dark"] .info-card {
+  background: linear-gradient(145deg, #21262d, #30363d) !important;
+  color: #e6edf3 !important;
+  border: 1px solid rgba(197, 160, 39, 0.2) !important;
+}
+
+[data-theme="dark"] .info-card h3 {
+  color: #f9d71c !important;
+}
+
+/* Hero title */
+[data-theme="dark"] .hero h1 {
+  color: #ffffff !important;
+  text-shadow: 0 4px 16px rgba(249, 215, 28, 0.3) !important;
+}
+
+[data-theme="dark"] .logo-text {
+  color: #0d1117 !important;
+}
+
+/* Footer - Élégant et discret */
+[data-theme="dark"] .footer {
+  background-color: #0d1117 !important;
+  border-top: 1px solid rgba(197, 160, 39, 0.2) !important;
+}
+
+[data-theme="dark"] .footer a {
+  color: #c9d1d9 !important;
+}
+
+[data-theme="dark"] .footer a:hover {
+  color: #f9d71c !important;
+}
+
+/* Item pages - Pages détail véhicule */
+[data-theme="dark"] .item-car-description {
+  background: linear-gradient(145deg, #21262d, #30363d) !important;
+  border: 1px solid rgba(197, 160, 39, 0.2) !important;
+}
+
+[data-theme="dark"] .item-specs-card {
+  background: linear-gradient(145deg, #21262d, #30363d) !important;
+  border: 1px solid rgba(197, 160, 39, 0.2) !important;
+}
+
+[data-theme="dark"] .item-detailed-specs {
+  background: linear-gradient(145deg, #21262d, #30363d) !important;
+  border: 1px solid rgba(197, 160, 39, 0.2) !important;
+}
+
+[data-theme="dark"] .item-spec-category {
+  background: #161b22 !important;
+  border: 1px solid rgba(197, 160, 39, 0.15) !important;
+}
+
+[data-theme="dark"] .item-spec-label {
+  color: #7d8590 !important;
+}
+
+[data-theme="dark"] .item-spec-value {
+  color: #e6edf3 !important;
+}
+
+[data-theme="dark"] .item-reserve-btn {
+  background: linear-gradient(135deg, #ff6b35, #f7931e) !important;
+  color: #ffffff !important;
+}
+
+/* Transitions fluides pour tout */
+body, .hero, .presentation, .card, .info-sections,
+.testimonial-list li, .features-list li, .contact-form,
+.form-control, .info-card, .item-car-description,
+.item-specs-card, .item-detailed-specs, .item-spec-category {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .theme-toggle {
+    top: 10px;
+    right: 10px;
+    padding: 10px 15px;
+    font-size: 0.9rem;
+  }
+}

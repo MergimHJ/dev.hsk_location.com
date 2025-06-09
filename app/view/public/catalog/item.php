@@ -1,35 +1,4 @@
-<!-- <section class="presentation-item">
-    <h2>Fiche technique de la <?= $data['car']['title'];?></h2>
-        
-            
-            <img src="/assets/cars/<?= $data['car']['slug'] . '/' . $data['car']['image'];?>" alt="Logo" />
-            <p><?= $data['car']['description'];?></p>
-            <p><?= $data['car']['content'];?></p>
-            <p>Prix: <?= $data['car']['price'];?>€</p>
-            <p>Carburant: <?= $data['car']['fuel_type'];?></p>
-            <p>Boite: <?= $data['car']['transmission'];?></p>
-            <p>Puissance: <?= $data['car']['horsepower'];?></p>
-            <p>Vitesse: <?= $data['car']['top_speed'];?></p>
-            <p>0-100: <?= $data['car']['acceleration'];?></p>
-            <p>Nombre de roues motrices: <?= $data['car']['wheel-transmission'];?></p>
-            <p>Places: <?= $data['car']['seats'];?></p>
-            <p>Année: <?= $data['car']['year'];?></p>
-            <p>Marque: <?= $data['car']['title'];?></p>
-            <p>Modèle: <?= $data['car']['model'];?></p>
-            <p>Carrosserie: <?= $data['car']['carrosserie'];?></p>
-            <p>Nombre de portes: <?= $data['car']['doors'];?></p>
-            <p>Nombre de places: <?= $data['car']['seats'];?></p>
-            <p>Nombre de cylindres: <?= $data['car']['cylinders'];?></p>
-            <p>Caution: <?= $data['car']['deposit'];?></p>
-            <p>Stock: <?= $data['car']['stock'];?></p>
-            <a href="contact.html">Réserver</a>
-</section> -->
-
-<!-- <section class="presentation-item">
-    <h2>Fiche technique de la <?= $data['car']['title'];?></h2>
-</section>     --> 
-
- <!-- Hero avec image principale -->
+<!-- Hero avec image principale -->
     <section class="item-car-hero">
         <img src="/assets/cars/<?= $data['car']['slug'] . '/' . $data['car']['image'];?>" alt="<?= $data['car']['title'];?>" />
         <div class="item-car-title-overlay">
@@ -74,11 +43,11 @@
                     <div class="item-specs-grid">
                         <div class="item-spec-item">
                             <span class="item-spec-label">Carburant</span>
-                            <span class="item-spec-value"><?= $data['car']['fuel_type'];?></span>
+                            <span class="item-spec-value"><?= ucfirst($data['car']['fuel_type']);?></span>
                         </div>
                         <div class="item-spec-item">
                             <span class="item-spec-label">Transmission</span>
-                            <span class="item-spec-value"><?= $data['car']['transmission'];?></span>
+                            <span class="item-spec-value"><?= ucfirst($data['car']['transmission']);?></span>
                         </div>
                         <div class="item-spec-item">
                             <span class="item-spec-label">Places</span>
@@ -118,7 +87,7 @@
                     <div class="item-specs-grid">
                         <div class="item-spec-item">
                             <span class="item-spec-label">Marque</span>
-                            <span class="item-spec-value"><?= $data['car']['title'];?></span>
+                            <span class="item-spec-value"><?= $data['car']['brand_name'] ?? 'Non définie';?></span>
                         </div>
                         <div class="item-spec-item">
                             <span class="item-spec-label">Modèle</span>
@@ -130,7 +99,7 @@
                         </div>
                         <div class="item-spec-item">
                             <span class="item-spec-label">Carrosserie</span>
-                            <span class="item-spec-value"><?= $data['car']['category_tag_id'];?></span>
+                            <span class="item-spec-value"><?= $data['car']['category_name'] ?? $data['car']['carrosserie'] ?? 'Non définie';?></span>
                         </div>
                     </div>
                 </div>
@@ -144,11 +113,11 @@
                         </div>
                         <div class="item-spec-item">
                             <span class="item-spec-label">Vitesse max</span>
-                            <span class="item-spec-value"><?= $data['car']['top_speed'];?></span>
+                            <span class="item-spec-value"><?= $data['car']['top_speed'];?> km/h</span>
                         </div>
                         <div class="item-spec-item">
                             <span class="item-spec-label">0-100 km/h</span>
-                            <span class="item-spec-value"><?= $data['car']['acceleration'];?></span>
+                            <span class="item-spec-value"><?= $data['car']['acceleration'];?> s</span>
                         </div>
                         <div class="item-spec-item">
                             <span class="item-spec-label">Cylindres</span>
@@ -162,11 +131,11 @@
                     <div class="item-specs-grid">
                         <div class="item-spec-item">
                             <span class="item-spec-label">Carburant</span>
-                            <span class="item-spec-value"><?= $data['car']['fuel_type'];?></span>
+                            <span class="item-spec-value"><?= ucfirst($data['car']['fuel_type']);?></span>
                         </div>
                         <div class="item-spec-item">
                             <span class="item-spec-label">Transmission</span>
-                            <span class="item-spec-value"><?= $data['car']['transmission'];?></span>
+                            <span class="item-spec-value"><?= ucfirst($data['car']['transmission']);?></span>
                         </div>
                         <div class="item-spec-item">
                             <span class="item-spec-label">Roues motrices</span>
@@ -178,5 +147,17 @@
                         </div>
                     </div>
                 </div>
+
+                <?php if (!empty($data['car']['theme_name'])): ?>
+                <div class="item-spec-category">
+                    <h4>🎯 Usage recommandé</h4>
+                    <div class="item-specs-grid">
+                        <div class="item-spec-item">
+                            <span class="item-spec-label">Thème</span>
+                            <span class="item-spec-value"><?= $data['car']['theme_name'];?></span>
+                        </div>
+                    </div>
+                </div>
+                <?php endif; ?>
             </div>
         </section>

@@ -8,6 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Pacifico&display=swap" rel="stylesheet">
   </head>
   <body>
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <span class="theme-icon" id="theme-icon">🌙</span>
+        <span id="theme-text">Dark</span>
+    </button>
     
     <section class="hero">
       <img src="" alt="">
@@ -55,5 +59,121 @@
         <span>&copy; 2025 HSK Locations. Tous droits réservés.</span>
       </div>
     </footer>
+
+     <script>
+        // Système de dark mode
+        class ThemeManager {
+            constructor() {
+                this.currentTheme = this.getStoredTheme() || this.getSystemTheme();
+                this.init();
+            }
+
+            init() {
+                this.applyTheme(this.currentTheme);
+                this.updateToggleButton();
+                
+                // Écouter les changements de préférence système
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                    if (!localStorage.getItem('theme')) {
+                        this.setTheme(e.matches ? 'dark' : 'light');
+                    }
+                });
+            }
+
+            getSystemTheme() {
+                return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+
+            getStoredTheme() {
+                return localStorage.getItem('theme');
+            }
+
+            setTheme(theme) {
+                this.currentTheme = theme;
+                this.applyTheme(theme);
+                this.storeTheme(theme);
+                this.updateToggleButton();
+                this.animateThemeChange();
+            }
+
+            applyTheme(theme) {
+                document.documentElement.setAttribute('data-theme', theme);
+                
+                // Mettre à jour la couleur de la barre d'adresse mobile
+                const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+                if (metaThemeColor) {
+                    metaThemeColor.setAttribute('content', theme === 'dark' ? '#000000' : '#c5a027');
+                } else {
+                    const meta = document.createElement('meta');
+                    meta.name = 'theme-color';
+                    meta.content = theme === 'dark' ? '#000000' : '#c5a027';
+                    document.head.appendChild(meta);
+                }
+            }
+
+            storeTheme(theme) {
+                localStorage.setItem('theme', theme);
+            }
+
+            toggleTheme() {
+                const newTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+                this.setTheme(newTheme);
+            }
+
+            updateToggleButton() {
+                const themeIcon = document.getElementById('theme-icon');
+                const themeText = document.getElementById('theme-text');
+                
+                if (this.currentTheme === 'dark') {
+                    themeIcon.textContent = '☀️';
+                    themeText.textContent = 'Light';
+                } else {
+                    themeIcon.textContent = '🌙';
+                    themeText.textContent = 'Dark';
+                }
+            }
+
+            animateThemeChange() {
+                document.body.classList.add('theme-changing');
+                setTimeout(() => {
+                    document.body.classList.remove('theme-changing');
+                }, 300);
+            }
+
+            // Méthode publique pour usage externe
+            getCurrentTheme() {
+                return this.currentTheme;
+            }
+        }
+
+        // Initialiser le gestionnaire de thème
+        const themeManager = new ThemeManager();
+
+        // Fonction globale pour le bouton
+        function toggleTheme() {
+            themeManager.toggleTheme();
+            
+            // Analytics optionnel
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'theme_toggle', {
+                    'theme': themeManager.getCurrentTheme()
+                });
+            }
+        }
+
+        // Raccourci clavier (Ctrl/Cmd + D)
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
+                e.preventDefault();
+                toggleTheme();
+            }
+        });
+
+        // Debug info
+        console.log('🎨 HSK Dark Mode System chargé !');
+        console.log('💡 Raccourci: Ctrl/Cmd + D pour changer de thème');
+        console.log('🔧 Thème détecté:', themeManager.getCurrentTheme());
+    </script>
+    <script src="/js/main.js"></script>
   </body>
 </html>

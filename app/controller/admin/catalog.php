@@ -104,7 +104,7 @@ function update()
             ':deposit' => $_POST['deposit'],
             ':stock' => $_POST['stock'],
             ':status' => $_POST['status'],
-            ':wheel_transmission' => $_POST['wheel_transmission'],
+            ':wheel_transmission' => $_POST['wheel-transmission'],
             ':carrosserie' => $_POST['carrosserie'],
             ':price' => $_POST['price']
         ]);
@@ -143,7 +143,7 @@ function create()
         'deposit' => $_POST['deposit'] ?? 1000.00,
         'stock' => $_POST['stock'] ?? 1,
         'status' => $_POST['status'] ?? 'draft',
-        'wheel_transmission' => $_POST['wheel_transmission'] ?? 1,
+        'wheel_transmission' => $_POST['wheel-transmission'] ?? 1,
         'carrosserie' => $_POST['carrosserie'] ?? 'Coupé',
         'price' => $_POST['price'] ?? 1000
     ];

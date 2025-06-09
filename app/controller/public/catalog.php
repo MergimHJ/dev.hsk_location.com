@@ -71,7 +71,18 @@ function item($slug)
     require_once '../app/config/db.php';
     $pdo = db();
     
-    $stmt = $pdo->prepare('SELECT * FROM car WHERE slug = :slug AND status = "published"');
+    // Récupérer la voiture avec les informations des tags
+    $stmt = $pdo->prepare('
+        SELECT c.*, 
+               cat.name as category_name,
+               theme.name as theme_name,
+               b.name as brand_name
+        FROM car c 
+        LEFT JOIN tag cat ON c.category_tag_id = cat.id AND cat.type = "category"
+        LEFT JOIN tag theme ON c.theme_tag_id = theme.id AND theme.type = "theme"
+        LEFT JOIN brand b ON c.brand_id = b.id
+        WHERE c.slug = :slug AND c.status = "published"
+    ');
     $stmt->execute(['slug' => $slug]);
     $car = $stmt->fetch();
     
@@ -82,10 +93,15 @@ function item($slug)
     
     // Véhicules similaires
     $similarQuery = $pdo->prepare("
-        SELECT * FROM car 
-        WHERE status = 'published' 
-        AND id != :current_id 
-        AND (fuel_type = :fuel_type OR price BETWEEN :price_min AND :price_max)
+        SELECT c.*, 
+               cat.name as category_name,
+               theme.name as theme_name
+        FROM car c
+        LEFT JOIN tag cat ON c.category_tag_id = cat.id AND cat.type = 'category'
+        LEFT JOIN tag theme ON c.theme_tag_id = theme.id AND theme.type = 'theme'
+        WHERE c.status = 'published' 
+        AND c.id != :current_id 
+        AND (c.fuel_type = :fuel_type OR c.price BETWEEN :price_min AND :price_max)
         ORDER BY RAND() 
         LIMIT 3
     ");
