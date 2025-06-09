@@ -1268,7 +1268,7 @@ section a[href="/contact"]:hover {
 
 /* Sections principales - Gris doux */
 [data-theme="dark"] .presentation {
-  background-color: #21262d !important;
+  background-color:rgb(25, 27, 31) !important;
   box-shadow: inset 0 0 80px 45px rgba(0, 0, 0, 0.3) !important;
 }
 
@@ -1308,7 +1308,7 @@ section a[href="/contact"]:hover {
 }
 
 [data-theme="dark"] .section-header h2 {
-  color: #f9d71c !important;
+  color:rgb(71, 69, 55) !important;
 }
 
 /* Textes - Gris clair pour la lisibilité */
@@ -1357,13 +1357,15 @@ section a[href="/contact"]:hover {
 }
 
 [data-theme="dark"] .navbar a {
-  color: #0d1117 !important;
+  color:rgb(25, 30, 37) !important;
   font-weight: 600 !important;
+  border-color : rgba(20, 20, 20, 0.2) !important;
 }
 
 [data-theme="dark"] .navbar a:hover {
   color: #0d1117 !important;
   background-color: #ffd93d !important;
+  border-color : rgba(0, 0, 0, 0.2) !important;
 }
 
 /* Formulaires - Design moderne */
