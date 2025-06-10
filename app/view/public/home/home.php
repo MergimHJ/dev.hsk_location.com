@@ -425,3 +425,422 @@ document.addEventListener('DOMContentLoaded', function() {
                 entry.target.style.transform = 'translateY(0)';
             }
         });
+
+        }, observerOptions);
+    
+    // Observer toutes les cartes
+    document.querySelectorAll('.supercar-card').forEach(card => {
+        observer.observe(card);
+    });
+    
+    console.log('✅ Toutes les animations chargées');
+});
+
+// ============================================
+// DARK MODE POUR PAGE HOME - HSK LOCATIONS
+// ============================================
+
+console.log('🏠 Home Dark Mode Script chargé');
+
+// Configuration des couleurs pour chaque thème
+const homeThemeColors = {
+    light: {
+        heroBackground: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #c5a027 100%)',
+        heroText: '#ffffff',
+        heroGradientStart: '#c5a027',
+        heroGradientEnd: '#e2c462',
+        heroDescription: 'rgba(255,255,255,0.9)',
+        heroStrong: '#c5a027',
+        brandsBackground: '#f8f9fa',
+        brandsTitle: '#1a1a1a',
+        brandsText: '#666',
+        brandsNames: '#c5a027',
+        vehiclesBackground: 'linear-gradient(135deg, #0a0a0a, #1a1a1a)',
+        vehiclesText: '#ffffff',
+        vehiclesAccent: '#c5a027',
+        cardBackground: 'linear-gradient(145deg, #1a1a1a, #0f0f0f)',
+        cardText: 'rgba(255,255,255,0.8)',
+        cardPrice: '#c5a027',
+        experienceBackground: 'linear-gradient(135deg, #c5a027, #e2c462)',
+        experienceText: 'white',
+        experienceSubtext: 'rgba(255,255,255,0.9)',
+        ctaBackground: 'linear-gradient(135deg, #0a0a0a, #1a1a1a)',
+        ctaText: 'white',
+        ctaAccent: '#c5a027'
+    },
+    dark: {
+        heroBackground: 'linear-gradient(135deg, #0d1117 0%, #21262d 50%, rgba(197, 160, 39, 0.1) 100%)',
+        heroText: '#ffffff',
+        heroGradientStart: '#f9d71c',
+        heroGradientEnd: '#e6c547',
+        heroDescription: 'rgba(230, 237, 243, 0.9)',
+        heroStrong: '#f9d71c',
+        brandsBackground: '#21262d',
+        brandsTitle: '#f9d71c',
+        brandsText: '#c9d1d9',
+        brandsNames: '#f9d71c',
+        vehiclesBackground: 'linear-gradient(135deg, #0d1117, #21262d)',
+        vehiclesText: '#ffffff',
+        vehiclesAccent: '#f9d71c',
+        cardBackground: 'linear-gradient(145deg, #21262d, #30363d)',
+        cardText: 'rgba(201, 209, 217, 0.8)',
+        cardPrice: '#f9d71c',
+        experienceBackground: 'linear-gradient(135deg, #f9d71c, #e6c547)',
+        experienceText: '#0d1117',
+        experienceSubtext: 'rgba(13, 17, 23, 0.9)',
+        ctaBackground: 'linear-gradient(135deg, #0d1117, #21262d)',
+        ctaText: '#ffffff',
+        ctaAccent: '#f9d71c'
+    }
+};
+
+// Fonction pour appliquer le thème à la page home
+function applyHomeTheme(theme) {
+    console.log('🎨 Application du thème home:', theme);
+    const colors = homeThemeColors[theme];
+    
+    try {
+        // Hero section background
+        const heroBg = document.querySelector('.hero-bg');
+        if (heroBg) {
+            heroBg.style.background = colors.heroBackground;
+        }
+        
+        // Hero title principal
+        const heroTitle = document.querySelector('.hero-epic h1');
+        if (heroTitle) {
+            heroTitle.style.color = colors.heroText;
+        }
+        
+        // Hero span avec gradient
+        const heroSpan = document.querySelector('.hero-epic h1 span');
+        if (heroSpan) {
+            heroSpan.style.background = `linear-gradient(135deg, ${colors.heroGradientStart}, ${colors.heroGradientEnd})`;
+            heroSpan.style.webkitBackgroundClip = 'text';
+            heroSpan.style.webkitTextFillColor = 'transparent';
+            heroSpan.style.backgroundClip = 'text';
+        }
+        
+        // Hero description
+        const heroP = document.querySelector('.hero-epic p');
+        if (heroP) {
+            heroP.style.color = colors.heroDescription;
+        }
+        
+        // Hero strong
+        const heroStrong = document.querySelector('.hero-epic strong');
+        if (heroStrong) {
+            heroStrong.style.color = colors.heroStrong;
+        }
+        
+        // Compteurs statistiques
+        const statsElements = document.querySelectorAll('[data-count]');
+        statsElements.forEach(stat => {
+            stat.style.color = colors.vehiclesAccent;
+        });
+        
+        // Texte des stats (Supercars, Marques Premium, etc.)
+        const statsLabels = document.querySelectorAll('div[style*="color: rgba(255,255,255,0.8)"]');
+        statsLabels.forEach(label => {
+            if (theme === 'dark') {
+                label.style.color = 'rgba(230, 237, 243, 0.8)';
+            } else {
+                label.style.color = 'rgba(255,255,255,0.8)';
+            }
+        });
+        
+        // Section marques prestigieuses
+        const brandsSection = document.querySelector('section[style*="background: #f8f9fa"]');
+        if (brandsSection) {
+            brandsSection.style.background = colors.brandsBackground;
+            
+            const brandsTitle = brandsSection.querySelector('h2');
+            if (brandsTitle) brandsTitle.style.color = colors.brandsTitle;
+            
+            const brandsP = brandsSection.querySelector('p');
+            if (brandsP) brandsP.style.color = colors.brandsText;
+            
+            // Noms des marques
+            const brandNames = brandsSection.querySelectorAll('div[style*="color: #c5a027"]');
+            brandNames.forEach(name => {
+                name.style.color = colors.brandsNames;
+            });
+        }
+        
+        // Section véhicules star
+        const vehiclesSection = document.querySelector('section[style*="background: linear-gradient(135deg, #0a0a0a, #1a1a1a)"]');
+        if (vehiclesSection && !vehiclesSection.querySelector('h2[style*="Marques"]')) {
+            vehiclesSection.style.background = colors.vehiclesBackground;
+            
+            // Titre de la section véhicules
+            const vehiclesTitle = vehiclesSection.querySelector('h2');
+            if (vehiclesTitle) {
+                vehiclesTitle.style.color = colors.vehiclesText;
+                const titleSpan = vehiclesTitle.querySelector('span[style*="color: #c5a027"]');
+                if (titleSpan) titleSpan.style.color = colors.vehiclesAccent;
+            }
+            
+            // Description section véhicules
+            const vehiclesDescription = vehiclesSection.querySelector('p');
+            if (vehiclesDescription) {
+                vehiclesDescription.style.color = theme === 'dark' ? 'rgba(230, 237, 243, 0.8)' : 'rgba(255,255,255,0.8)';
+            }
+            
+            // Cards des véhicules
+            const supercards = vehiclesSection.querySelectorAll('.supercar-card');
+            supercards.forEach(card => {
+                card.style.background = colors.cardBackground;
+                if (theme === 'dark') {
+                    card.style.border = '1px solid rgba(197, 160, 39, 0.2)';
+                }
+                
+                // Titre de la card
+                const cardTitle = card.querySelector('h3');
+                if (cardTitle) cardTitle.style.color = colors.vehiclesAccent;
+                
+                // Description de la card
+                const cardP = card.querySelector('p');
+                if (cardP) cardP.style.color = colors.cardText;
+                
+                // Prix
+                const priceDiv = card.querySelector('div[style*="color: #c5a027"]');
+                if (priceDiv) priceDiv.style.color = colors.cardPrice;
+                
+                // Badges Premium
+                const badges = card.querySelectorAll('span[style*="background: linear-gradient(135deg, #c5a027, #e2c462)"]');
+                badges.forEach(badge => {
+                    if (theme === 'dark') {
+                        badge.style.background = 'linear-gradient(135deg, #f9d71c, #e6c547)';
+                        badge.style.color = '#0d1117';
+                    } else {
+                        badge.style.background = 'linear-gradient(135deg, #c5a027, #e2c462)';
+                        badge.style.color = 'white';
+                    }
+                });
+                
+                // Badges année
+                const yearBadges = card.querySelectorAll('span[style*="background: rgba(197,160,39,0.9)"]');
+                yearBadges.forEach(badge => {
+                    if (theme === 'dark') {
+                        badge.style.background = 'rgba(249, 215, 28, 0.9)';
+                        badge.style.color = '#0d1117';
+                    } else {
+                        badge.style.background = 'rgba(197,160,39,0.9)';
+                        badge.style.color = 'white';
+                    }
+                });
+                
+                // Badges puissance
+                const powerBadges = card.querySelectorAll('span[style*="background: rgba(255,255,255,0.2)"]');
+                powerBadges.forEach(badge => {
+                    if (theme === 'dark') {
+                        badge.style.background = 'rgba(48, 54, 61, 0.8)';
+                        badge.style.color = '#e6edf3';
+                    } else {
+                        badge.style.background = 'rgba(255,255,255,0.2)';
+                        badge.style.color = 'white';
+                    }
+                });
+            });
+        }
+        
+        // Section expérience client
+        const experienceSection = document.querySelector('section[style*="background: linear-gradient(135deg, #c5a027, #e2c462)"]');
+        if (experienceSection) {
+            experienceSection.style.background = colors.experienceBackground;
+            
+            // Titre principal
+            const experienceTitle = experienceSection.querySelector('h2');
+            if (experienceTitle) experienceTitle.style.color = colors.experienceText;
+            
+            // Description principale
+            const experienceP = experienceSection.querySelector('p');
+            if (experienceP) experienceP.style.color = colors.experienceSubtext;
+            
+            // Services titles (h3)
+            const servicesTitles = experienceSection.querySelectorAll('h3');
+            servicesTitles.forEach(title => {
+                title.style.color = colors.experienceText;
+            });
+            
+            // Services descriptions
+            const servicesTexts = experienceSection.querySelectorAll('div[style*="background: rgba(255,255,255,0.1)"] p');
+            servicesTexts.forEach(text => {
+                text.style.color = colors.experienceSubtext;
+            });
+            
+            // Titre témoignages
+            const testimonialTitle = experienceSection.querySelector('h3[style*="font-size: 1.8rem"]');
+            if (testimonialTitle) testimonialTitle.style.color = colors.experienceText;
+            
+            // Témoignages textes
+            const testimonialTexts = experienceSection.querySelectorAll('div[style*="color: rgba(255,255,255,0.9)"]');
+            testimonialTexts.forEach(text => {
+                text.style.color = colors.experienceSubtext;
+            });
+            
+            // Témoignages auteurs
+            const testimonialAuthors = experienceSection.querySelectorAll('div[style*="color: rgba(255,255,255,0.7)"]');
+            testimonialAuthors.forEach(author => {
+                author.style.color = theme === 'dark' ? 'rgba(13, 17, 23, 0.7)' : 'rgba(255,255,255,0.7)';
+            });
+        }
+        
+        // Section CTA finale
+        const ctaSections = document.querySelectorAll('section[style*="background: linear-gradient(135deg, #0a0a0a, #1a1a1a)"]');
+        const ctaSection = Array.from(ctaSections).find(section => 
+            section.querySelector('h2') && section.querySelector('h2').textContent.includes('Aventure')
+        );
+        
+        if (ctaSection) {
+            ctaSection.style.background = colors.ctaBackground;
+            
+            const ctaTitle = ctaSection.querySelector('h2');
+            if (ctaTitle) {
+                ctaTitle.style.color = colors.ctaText;
+                const ctaSpan = ctaTitle.querySelector('span[style*="color: #c5a027"]');
+                if (ctaSpan) ctaSpan.style.color = colors.ctaAccent;
+            }
+            
+            const ctaP = ctaSection.querySelector('p');
+            if (ctaP) {
+                ctaP.style.color = theme === 'dark' ? 'rgba(230, 237, 243, 0.8)' : 'rgba(255,255,255,0.8)';
+            }
+            
+            // Liens de contact
+            const contactLinks = ctaSection.querySelectorAll('a[style*="color: #c5a027"]');
+            contactLinks.forEach(link => {
+                link.style.color = colors.ctaAccent;
+            });
+        }
+        
+        // Boutons CTA principaux
+        const catalogButtons = document.querySelectorAll('a[href="/catalog"]');
+        catalogButtons.forEach(btn => {
+            if (theme === 'dark') {
+                btn.style.background = 'linear-gradient(135deg, #f9d71c, #e6c547)';
+                btn.style.color = '#0d1117';
+                btn.style.boxShadow = '0 10px 30px rgba(249, 215, 28, 0.4)';
+            } else {
+                btn.style.background = 'linear-gradient(135deg, #c5a027, #e2c462)';
+                btn.style.color = 'white';
+                btn.style.boxShadow = '0 10px 30px rgba(197,160,39,0.4)';
+            }
+        });
+        
+        const contactButtons = document.querySelectorAll('a[href="/contact"]');
+        contactButtons.forEach(btn => {
+            if (theme === 'dark') {
+                btn.style.background = 'rgba(48, 54, 61, 0.3)';
+                btn.style.color = '#e6edf3';
+                btn.style.border = '2px solid rgba(230, 237, 243, 0.3)';
+            } else {
+                btn.style.background = 'rgba(255,255,255,0.1)';
+                btn.style.color = 'white';
+                btn.style.border = '2px solid rgba(255,255,255,0.3)';
+            }
+        });
+        
+        // Particules flottantes
+        const particles = document.querySelectorAll('.particle');
+        particles.forEach((particle, index) => {
+            if (theme === 'dark') {
+                const darkColors = ['#f9d71c', '#e6c547', '#ffd93d'];
+                particle.style.background = darkColors[index % darkColors.length];
+            } else {
+                const lightColors = ['#c5a027', '#e2c462', '#f5cc48'];
+                particle.style.background = lightColors[index % lightColors.length];
+            }
+        });
+        
+        console.log('✅ Thème home appliqué avec succès:', theme);
+        
+    } catch (error) {
+        console.error('❌ Erreur lors de l\'application du thème home:', error);
+    }
+}
+
+// Observer les changements de thème
+function observeHomeThemeChanges() {
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
+                const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+                console.log('🔄 Changement de thème détecté pour home:', currentTheme);
+                setTimeout(() => applyHomeTheme(currentTheme), 100);
+            }
+        });
+    });
+    
+    observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['data-theme']
+    });
+    
+    console.log('👁️ Observer de thème home configuré');
+}
+
+// Initialiser le système dark mode pour home
+if (window.location.pathname === '/' || window.location.pathname === '/home') {
+    console.log('🏠 Page home détectée, initialisation du dark mode...');
+    
+    // Appliquer le thème initial
+    const initialTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    console.log('🎨 Thème initial home:', initialTheme);
+    
+    // Démarrer l'observation
+    observeHomeThemeChanges();
+    
+    // Appliquer le thème avec un petit délai pour s'assurer que le DOM est prêt
+    setTimeout(() => {
+        applyHomeTheme(initialTheme);
+    }, 100);
+    
+    // Réappliquer après un délai plus long pour les éléments chargés dynamiquement
+    setTimeout(() => {
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        applyHomeTheme(currentTheme);
+    }, 1000);
+    
+    console.log('✅ Home Dark Mode System initialisé');
+}
+
+// Ajouter les styles CSS pour les transitions fluides
+const homeStyleSheet = document.createElement('style');
+homeStyleSheet.textContent = `
+    /* Transitions fluides pour tous les éléments de la home */
+    .hero-epic *, 
+    .supercar-card *,
+    section[style*="background"] *,
+    section[style*="background"],
+    .hero-bg,
+    .particle {
+        transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                   background 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                   border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                   box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+    
+    /* Transition spéciale pour le gradient du hero */
+    .hero-epic h1 span {
+        transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+    
+    /* Améliorer les hovers des boutons CTA */
+    .hero-epic a:hover,
+    section a[href="/catalog"]:hover,
+    section a[href="/contact"]:hover {
+        transform: translateY(-3px) scale(1.05) !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+    
+    /* Animation pour les cards */
+    .supercar-card:hover {
+        transform: translateY(-10px) scale(1.02) !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+`;
+document.head.appendChild(homeStyleSheet);
+
+console.log('✅ Home Dark Mode Script complètement chargé et configuré');
+</script>
