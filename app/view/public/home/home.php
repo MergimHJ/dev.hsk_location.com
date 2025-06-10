@@ -351,49 +351,170 @@ a[href="/contact"]:hover {
 </style>
 
 <!-- JavaScript pour animations et effets -->
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚗 HSK Home - Version ÉPIQUE chargée !');
+    console.log('🚗 HSK Home - Version OPTIMISÉE chargée !');
     
-    // Animation compteurs
+    // 1. FORCE L'AFFICHAGE IMMÉDIAT
+    const heroSection = document.querySelector('.hero-epic');
+    if (heroSection) {
+        heroSection.style.opacity = '1';
+        heroSection.style.visibility = 'visible';
+        heroSection.style.transform = 'translateZ(0)';
+    }
+
+    // 2. FORCE L'ANIMATION GRADIENT
+    const heroBg = document.querySelector('.hero-bg');
+    if (heroBg) {
+        heroBg.style.animationPlayState = 'running';
+        heroBg.style.transform = 'translateZ(0)';
+        console.log('🎨 Animation gradient forcée:', getComputedStyle(heroBg).animationName);
+    }
+
+    // 3. ANIMATION DES COMPTEURS - CORRIGÉE ✅
     function animateCounters() {
         const counters = document.querySelectorAll('[data-count]');
-        counters.forEach(counter => {
-            const target = parseInt(counter.getAttribute('data-count'));
-            const duration = 2000;
-            const step = target / (duration / 16);
-            let current = 0;
-            
-            const timer = setInterval(() => {
-                current += step;
-                if (current >= target) {
-                    counter.textContent = target;
-                    clearInterval(timer);
-                } else {
-                    counter.textContent = Math.floor(current);
-                }
-            }, 16);
-        });
+        if (counters.length === 0) {
+            // Si pas d'attribut data-count, utiliser les valeurs directement
+            const statValues = document.querySelectorAll('.hero-stats .stat-value, div[style*="font-size: 3rem"]');
+            statValues.forEach((counter, index) => {
+                // Valeurs par défaut
+                let target = 0;
+                if (index === 0) target = <?= $data['stats']['total_cars'] ?? 27 ?>; // Supercars
+                if (index === 1) target = 15; // Marques Premium  
+                if (index === 2) target = 24; // Heures Support
+                
+                const duration = 1500;
+                const step = target / (duration / 16);
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += step;
+                    if (current >= target) {
+                        counter.textContent = target;
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.floor(current);
+                    }
+                }, 16);
+            });
+        } else {
+            // Si attribut data-count existe
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-count'));
+                const duration = 1500;
+                const step = target / (duration / 16);
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += step;
+                    if (current >= target) {
+                        counter.textContent = target;
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.floor(current);
+                    }
+                }, 16);
+            });
+        }
     }
     
-    // Lancer les compteurs après 1.5s
-    setTimeout(animateCounters, 1500);
-    
-    // Parallax sur le scroll
-    window.addEventListener('scroll', () => {
+    // Lancer les compteurs après un court délai
+    setTimeout(animateCounters, 800);
+
+    // 4. PARALLAX OPTIMISÉ
+    let ticking = false;
+    function updateParallax() {
         const scrolled = window.pageYOffset;
         const parallax = document.querySelector('.hero-bg');
         const particles = document.querySelectorAll('.particle');
         
-        if (parallax) {
-            parallax.style.transform = `translateY(${scrolled * 0.5}px)`;
+        if (parallax && scrolled < window.innerHeight) {
+            parallax.style.transform = `translateY(${scrolled * 0.3}px) translateZ(0)`;
         }
         
         particles.forEach((particle, index) => {
-            particle.style.transform = `translateY(${scrolled * (0.2 + index * 0.1)}px)`;
+            if (scrolled < window.innerHeight) {
+                particle.style.transform = `translateY(${scrolled * (0.1 + index * 0.05)}px) translateZ(0)`;
+            }
         });
+        
+        ticking = false;
+    }
+    
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(updateParallax);
+            ticking = true;
+        }
     });
     
+    // 5. ANIMATION DES CARTES (optimisée)
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0) translateZ(0)';
+            }
+        });
+    }, observerOptions);
+    
+    // Observer toutes les cartes
+    document.querySelectorAll('.supercar-card').forEach(card => {
+        observer.observe(card);
+    });
+    
+    // 6. OPTIMISATION GPU FORCÉE
+    const animatedElements = document.querySelectorAll('.hero-bg, .hero-epic h1, .particle, .supercar-card');
+    animatedElements.forEach(el => {
+        el.style.transform += ' translateZ(0)';
+        el.style.backfaceVisibility = 'hidden';
+    });
+    
+    console.log('✅ Toutes les optimisations chargées - Compteurs animés inclus');
+});
+
+// 7. OPTIMISATION AU CHARGEMENT COMPLET
+window.addEventListener('load', function() {
+    const heroBg = document.querySelector('.hero-bg');
+    if (heroBg) {
+        heroBg.style.animationPlayState = 'running';
+        heroBg.style.animationDuration = '6s';
+        heroBg.style.animationTimingFunction = 'ease';
+        heroBg.style.animationIterationCount = 'infinite';
+        console.log('🔄 Animation gradient re-forcée après chargement');
+    }
+    
+    const criticalElements = document.querySelectorAll('.hero-epic, .hero-bg, .particle, h1, span');
+    criticalElements.forEach(el => {
+        el.style.willChange = 'transform';
+        el.style.transform += ' translateZ(0)';
+    });
+    
+    console.log('🚀 Optimisations GPU appliquées');
+});
+
+// 8. DEBUG - Vérification continue
+setInterval(() => {
+    const heroBg = document.querySelector('.hero-bg');
+    if (heroBg) {
+        const computedStyle = getComputedStyle(heroBg);
+        if (computedStyle.animationPlayState === 'paused') {
+            console.warn('⚠️ Animation pausée, redémarrage...');
+            heroBg.style.animationPlayState = 'running';
+        }
+    }
+}, 2000);
+
+console.log('🎯 Script de performance COMPLET avec compteurs chargé');
+</script>
+<script>
     // Effet de typing sur le titre (optionnel)
     const heroTitle = document.querySelector('.hero-epic h1');
     if (heroTitle) {
