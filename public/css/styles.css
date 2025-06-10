@@ -2223,3 +2223,175 @@ section:has(#search-input) label {
     gap: 10px !important;
   }
 }
+
+/* ==============================================
+   CORRECTION DARK MODE - NAVBAR HARMONISÉE
+   ============================================== */
+
+/* Remplacer les styles dark mode existants par ceux-ci */
+
+/* Dark mode - Votre style EXACT + effets harmonisés */
+[data-theme="dark"] .navbar a {
+  color: rgb(25, 30, 37) !important;
+  font-weight: 600 !important;
+  border-color: rgba(20, 20, 20, 0.2) !important;
+  /* Assurer l'état de base pour les transitions */
+  transform: translateY(0) scale(1) !important;
+}
+
+[data-theme="dark"] .navbar a:hover {
+  color: #0d1117 !important;
+  background-color: #ffd93d !important;
+  background-image: linear-gradient(
+    -3deg,
+    transparent 15%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 75%
+  ) !important;
+  border-color: rgba(0, 0, 0, 0.2) !important;
+  /* AJOUT des effets manquants - IDENTIQUES aux autres pages */
+  transform: translateY(-2px) scale(1.05) !important;
+  box-shadow: 0 8px 25px rgba(249, 215, 28, 0.4) !important;
+}
+
+/* Mode clair - Assurer la cohérence aussi */
+.navbar a {
+  color: var(--text-light) !important;
+  text-decoration: none !important;
+  font-weight: 600 !important;
+  font-size: 1.3rem !important;
+  padding: 5px 10px !important;
+  border: 1px solid var(--text-light) !important;
+  border-radius: 3px !important;
+  transition: all 0.3s ease !important;
+  /* État de base pour les transitions */
+  transform: translateY(0) scale(1) !important;
+}
+
+/* Mode clair hover - Votre style exact + effets */
+.navbar a:hover {
+  background-color: #c5a027 !important;
+  background-image: linear-gradient(
+    -3deg,
+    transparent 15%,
+    #f3d573 50%,
+    transparent 75%
+  ) !important;
+  color: rgb(41, 41, 41) !important;
+  border: 1px solid black !important;
+  /* Effets harmonisés */
+  transform: translateY(-2px) scale(1.05) !important;
+  box-shadow: 0 8px 25px rgba(197, 160, 39, 0.4) !important;
+}
+
+/* Effet de clic uniforme */
+.navbar a:active {
+  transform: translateY(0) scale(1.02) !important;
+  transition: all 0.1s ease !important;
+}
+
+/* Responsive - Conserver les effets même sur mobile */
+@media (max-width: 768px) {
+  .navbar ul {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+  
+  /* Assurer les effets sur mobile aussi */
+  .navbar a:hover {
+    transform: translateY(-2px) scale(1.05) !important;
+    box-shadow: 0 8px 25px rgba(197, 160, 39, 0.4) !important;
+  }
+  
+  /* Dark mode mobile */
+  [data-theme="dark"] .navbar a:hover {
+    transform: translateY(-2px) scale(1.05) !important;
+    box-shadow: 0 8px 25px rgba(249, 215, 28, 0.4) !important;
+  }
+}
+
+/* ==============================================
+   CORRECTION DARK MODE - NAVBAR HARMONISÉE
+   ============================================== */
+
+/* Remplacer les styles dark mode existants par ceux-ci */
+
+/* Dark mode - Votre style EXACT + effets harmonisés */
+[data-theme="dark"] .navbar a {
+  color: rgb(25, 30, 37) !important;
+  font-weight: 600 !important;
+  border-color: rgba(20, 20, 20, 0.2) !important;
+  /* Assurer l'état de base pour les transitions */
+  transform: translateY(0) scale(1) !important;
+}
+
+[data-theme="dark"] .navbar a:hover {
+  color: #0d1117 !important;
+  background-color: #ffd93d !important;
+  background-image: linear-gradient(
+    -3deg,
+    transparent 15%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 75%
+  ) !important;
+  border-color: rgba(0, 0, 0, 0.2) !important;
+  /* AJOUT des effets manquants - IDENTIQUES aux autres pages */
+  transform: translateY(-2px) scale(1.05) !important;
+  box-shadow: 0 8px 25px rgba(249, 215, 28, 0.4) !important;
+}
+
+/* Mode clair - Assurer la cohérence aussi */
+.navbar a {
+  color: var(--text-light) !important;
+  text-decoration: none !important;
+  font-weight: 600 !important;
+  font-size: 1.3rem !important;
+  padding: 5px 10px !important;
+  border: 1px solid var(--text-light) !important;
+  border-radius: 3px !important;
+  transition: all 0.3s ease !important;
+  /* État de base pour les transitions */
+  transform: translateY(0) scale(1) !important;
+}
+
+/* Mode clair hover - Votre style exact + effets */
+.navbar a:hover {
+  background-color: #c5a027 !important;
+  background-image: linear-gradient(
+    -3deg,
+    transparent 15%,
+    #f3d573 50%,
+    transparent 75%
+  ) !important;
+  color: rgb(41, 41, 41) !important;
+  border: 1px solid black !important;
+  /* Effets harmonisés */
+  transform: translateY(-2px) scale(1.05) !important;
+  box-shadow: 0 8px 25px rgba(197, 160, 39, 0.4) !important;
+}
+
+/* Effet de clic uniforme */
+.navbar a:active {
+  transform: translateY(0) scale(1.02) !important;
+  transition: all 0.1s ease !important;
+}
+
+/* Responsive - Conserver les effets même sur mobile */
+@media (max-width: 768px) {
+  .navbar ul {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+  
+  /* Assurer les effets sur mobile aussi */
+  .navbar a:hover {
+    transform: translateY(-2px) scale(1.05) !important;
+    box-shadow: 0 8px 25px rgba(197, 160, 39, 0.4) !important;
+  }
+  
+  /* Dark mode mobile */
+  [data-theme="dark"] .navbar a:hover {
+    transform: translateY(-2px) scale(1.05) !important;
+    box-shadow: 0 8px 25px rgba(249, 215, 28, 0.4) !important;
+  }
+}
