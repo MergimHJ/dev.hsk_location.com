@@ -2168,3 +2168,58 @@ section:has(#search-input) label {
 .hero-epic *, .supercar-card *, section * {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
+
+/* ==============================================
+   FORCER LES STYLES NAVBAR avec !important
+   ============================================== */
+
+/* Force votre style exact avec !important pour battre les styles inline */
+.navbar a {
+  color: var(--text-light) !important;
+  text-decoration: none !important;
+  font-weight: 600 !important;
+  font-size: 1.3rem !important;
+  padding: 5px 10px !important;
+  border: 1px solid var(--text-light) !important;
+  border-radius: 3px !important;
+  transition: background-color 0.3s ease, color 0.3s ease !important;
+}
+
+/* Force votre hover exact + effets */
+.navbar a:hover {
+  background-color: #c5a027 !important;
+  background-image: linear-gradient(
+    -3deg,
+    transparent 15%,
+    #f3d573 50%,
+    transparent 75%
+  ) !important;
+  color: rgb(41, 41, 41) !important;
+  border: 1px solid black !important;
+  /* Effets harmonisés */
+  transform: translateY(-2px) scale(1.05) !important;
+  box-shadow: 0 8px 25px rgba(197, 160, 39, 0.4) !important;
+}
+
+/* Dark mode forcé */
+[data-theme="dark"] .navbar a {
+  color: rgb(25, 30, 37) !important;
+  font-weight: 600 !important;
+  border-color: rgba(20, 20, 20, 0.2) !important;
+}
+
+[data-theme="dark"] .navbar a:hover {
+  color: #0d1117 !important;
+  background-color: #ffd93d !important;
+  border-color: rgba(0, 0, 0, 0.2) !important;
+  transform: translateY(-2px) scale(1.05) !important;
+  box-shadow: 0 8px 25px rgba(249, 215, 28, 0.4) !important;
+}
+
+/* Responsive forcé */
+@media (max-width: 768px) {
+  .navbar ul {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+}
