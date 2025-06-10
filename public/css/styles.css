@@ -1655,3 +1655,214 @@ section:has(#search-input) label {
   color: #f9d71c !important;
   text-shadow: 0 2px 8px rgba(249, 215, 28, 0.3) !important;
 }
+
+/* Styles pour la pagination - Mode clair et sombre */
+
+/* Section pagination de base */
+.pagination-section {
+    background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
+    border: 1px solid rgba(197, 160, 39, 0.2);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+/* Boutons de pagination */
+.pagination-btn {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    user-select: none;
+}
+
+.pagination-btn:hover {
+    background: linear-gradient(135deg, var(--primary-dark), #e2c462) !important;
+    color: white !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(197, 160, 39, 0.3);
+}
+
+.pagination-current {
+    animation: pulse 2s infinite;
+    position: relative;
+    overflow: hidden;
+}
+
+.pagination-current::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.pagination-current:hover::before {
+    left: 100%;
+}
+
+/* Sélecteur de page */
+#page-selector {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+#page-selector:focus {
+    border-color: var(--primary-dark);
+    box-shadow: 0 0 0 3px rgba(197, 160, 39, 0.2);
+    outline: none;
+}
+
+#page-selector option {
+    background: #1a1a1a;
+    color: var(--text-light);
+}
+
+/* MODE SOMBRE - Pagination */
+[data-theme="dark"] .pagination-section {
+    background: linear-gradient(145deg, #21262d, #30363d) !important;
+    border: 1px solid rgba(197, 160, 39, 0.2) !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6) !important;
+}
+
+[data-theme="dark"] .pagination-section p {
+    color: #e6edf3 !important;
+}
+
+[data-theme="dark"] .pagination-btn {
+    background: rgba(197, 160, 39, 0.1) !important;
+    color: #e6edf3 !important;
+    border: 1px solid rgba(197, 160, 39, 0.2) !important;
+}
+
+[data-theme="dark"] .pagination-current {
+    background: linear-gradient(135deg, #f9d71c, #e6c547) !important;
+    color: #0d1117 !important;
+    border: 1px solid #f9d71c !important;
+}
+
+[data-theme="dark"] .pagination-nav-btn {
+    background: rgba(197, 160, 39, 0.1) !important;
+    color: #f9d71c !important;
+    border: 1px solid rgba(197, 160, 39, 0.3) !important;
+}
+
+[data-theme="dark"] .pagination-number {
+    background: rgba(197, 160, 39, 0.1) !important;
+    color: #e6edf3 !important;
+    border: 1px solid rgba(197, 160, 39, 0.2) !important;
+}
+
+[data-theme="dark"] .pagination-btn:hover {
+    background: linear-gradient(135deg, #f9d71c, #e6c547) !important;
+    color: #0d1117 !important;
+    border: 1px solid #f9d71c !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(249, 215, 28, 0.3);
+}
+
+[data-theme="dark"] #page-selector {
+    background: #161b22 !important;
+    color: #e6edf3 !important;
+    border: 2px solid rgba(197, 160, 39, 0.3) !important;
+}
+
+[data-theme="dark"] #page-selector:focus {
+    border-color: #f9d71c !important;
+    box-shadow: 0 0 0 3px rgba(249, 215, 28, 0.2) !important;
+}
+
+[data-theme="dark"] #page-selector option {
+    background: #161b22 !important;
+    color: #e6edf3 !important;
+}
+
+[data-theme="dark"] .pagination-section label {
+    color: #e6edf3 !important;
+}
+
+/* Responsive pagination */
+@media (max-width: 768px) {
+    .pagination-nav {
+        gap: 5px !important;
+        flex-wrap: wrap;
+    }
+    
+    .pagination-btn {
+        padding: 8px 10px !important;
+        font-size: 0.85rem !important;
+        min-width: 35px !important;
+    }
+    
+    .pagination-nav-btn {
+        padding: 8px 10px !important;
+        font-size: 0.75rem !important;
+        gap: 3px !important;
+    }
+    
+    .pagination-section {
+        padding: 30px 15px !important;
+        margin: 20px 10px !important;
+    }
+    
+    .pagination-section p {
+        font-size: 0.9rem !important;
+    }
+    
+    /* Masquer le texte des boutons nav sur mobile, garder seulement les icônes */
+    .pagination-nav-btn span:not([style*="font-size"]) {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .pagination-nav {
+        justify-content: center;
+        gap: 3px !important;
+    }
+    
+    .pagination-btn {
+        padding: 6px 8px !important;
+        font-size: 0.8rem !important;
+        min-width: 30px !important;
+    }
+    
+    /* Masquer les points de suspension sur très petit écran */
+    .pagination-nav span {
+        display: none !important;
+    }
+}
+
+/* Animation de chargement pour la pagination */
+.pagination-loading {
+    position: relative;
+}
+
+.pagination-loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(197, 160, 39, 0.1), transparent);
+    animation: loading-shimmer 1.5s infinite;
+}
+
+@keyframes loading-shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* État de survol amélioré */
+.pagination-btn:not(.pagination-current):hover {
+    transform: translateY(-2px) scale(1.05);
+}
+
+.pagination-current:hover {
+    transform: translateY(-1px);
+}
+
+/* Transition fluide pour tous les éléments de pagination */
+.pagination-section * {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
