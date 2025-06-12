@@ -8,20 +8,95 @@ function catalog()
     // Configuration de la pagination
     $itemsPerPage = 12;
     $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-    $page = max(1, $page); // S'assurer que la page est au minimum 1
+    $page = max(1, $page);
     $offset = ($page - 1) * $itemsPerPage;
 
-    // Compter le nombre total de voitures
-    $countQuery = $pdo->query("
-        SELECT COUNT(*) as total
-        FROM car c 
-        WHERE c.status = 'published'
-    ");
-    $totalCars = $countQuery->fetch()['total'];
+    // Récupération des filtres depuis l'URL
+    $searchTerm = isset($_GET['search']) ? trim($_GET['search']) : '';
+    $fuelFilter = isset($_GET['fuel']) ? $_GET['fuel'] : '';
+    $priceFilter = isset($_GET['price']) ? $_GET['price'] : '';
+    $categoryFilter = isset($_GET['category']) ? (int)$_GET['category'] : 0;
+    $themeFilter = isset($_GET['theme']) ? (int)$_GET['theme'] : 0;
+    $sortFilter = isset($_GET['sort']) ? $_GET['sort'] : 'default';
+
+    // Construction de la requête avec filtres
+    $whereConditions = ["c.status = 'published'"];
+    $params = [];
+
+    // Filtre de recherche par nom
+    if (!empty($searchTerm)) {
+        $whereConditions[] = "c.title LIKE :search";
+        $params['search'] = '%' . $searchTerm . '%';
+    }
+
+    // Filtre carburant
+    if (!empty($fuelFilter)) {
+        $whereConditions[] = "c.fuel_type = :fuel";
+        $params['fuel'] = $fuelFilter;
+    }
+
+    // Filtre prix
+    if (!empty($priceFilter)) {
+        $priceRange = explode('-', $priceFilter);
+        if (count($priceRange) === 2) {
+            $minPrice = (int)$priceRange[0];
+            $maxPrice = (int)$priceRange[1];
+            if ($maxPrice >= 999999) {
+                $whereConditions[] = "c.price >= :min_price";
+                $params['min_price'] = $minPrice;
+            } else {
+                $whereConditions[] = "c.price BETWEEN :min_price AND :max_price";
+                $params['min_price'] = $minPrice;
+                $params['max_price'] = $maxPrice;
+            }
+        }
+    }
+
+    // Filtre catégorie
+    if ($categoryFilter > 0) {
+        $whereConditions[] = "c.category_tag_id = :category";
+        $params['category'] = $categoryFilter;
+    }
+
+    // Filtre thème
+    if ($themeFilter > 0) {
+        $whereConditions[] = "c.theme_tag_id = :theme";
+        $params['theme'] = $themeFilter;
+    }
+
+    // Construction de la clause WHERE
+    $whereClause = implode(' AND ', $whereConditions);
+
+    // Clause ORDER BY selon le tri
+    $orderBy = "c.created_at DESC"; // Par défaut
+    switch ($sortFilter) {
+        case 'price-asc':
+            $orderBy = "c.price ASC";
+            break;
+        case 'price-desc':
+            $orderBy = "c.price DESC";
+            break;
+        case 'name-asc':
+            $orderBy = "c.title ASC";
+            break;
+        case 'year-desc':
+            $orderBy = "c.year DESC";
+            break;
+    }
+
+    // Compter le nombre total de voitures FILTRÉES
+    $countQuery = "SELECT COUNT(*) as total FROM car c 
+                   LEFT JOIN tag cat ON c.category_tag_id = cat.id AND cat.type = 'category'
+                   LEFT JOIN tag theme ON c.theme_tag_id = theme.id AND theme.type = 'theme'
+                   WHERE $whereClause";
+    
+    $countStmt = $pdo->prepare($countQuery);
+    $countStmt->execute($params);
+    $totalCars = $countStmt->fetch()['total'];
     $totalPages = ceil($totalCars / $itemsPerPage);
 
-    // Récupération des voitures avec pagination
-    $stmt = $pdo->prepare("
+    // Récupération des voitures avec pagination ET filtres
+    $mainQuery = "
         SELECT 
             c.*,
             cat.name as category_name,
@@ -39,29 +114,36 @@ function catalog()
         FROM car c 
         LEFT JOIN tag cat ON c.category_tag_id = cat.id AND cat.type = 'category'
         LEFT JOIN tag theme ON c.theme_tag_id = theme.id AND theme.type = 'theme'
-        WHERE c.status = 'published' 
-        ORDER BY c.created_at DESC
+        WHERE $whereClause
+        ORDER BY $orderBy
         LIMIT :limit OFFSET :offset
-    ");
+    ";
     
-    $stmt->bindValue(':limit', $itemsPerPage, PDO::PARAM_INT);
-    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $stmt = $pdo->prepare($mainQuery);
+    
+    // Ajouter les paramètres de pagination
+    $params['limit'] = $itemsPerPage;
+    $params['offset'] = $offset;
+    
+    // Bind des paramètres
+    foreach ($params as $key => $value) {
+        if ($key === 'limit' || $key === 'offset') {
+            $stmt->bindValue(':' . $key, $value, PDO::PARAM_INT);
+        } else {
+            $stmt->bindValue(':' . $key, $value);
+        }
+    }
+    
     $stmt->execute();
     $cars = $stmt->fetchAll();
     
-    
     // Ajouter le statut "nouveau" en PHP
-    $newCarIds = [25, 26, 27]; // IDs des voitures à marquer comme nouvelles
+    $newCarIds = [25, 26, 27];
     foreach ($cars as &$car) {
         $car['is_actually_new'] = in_array($car['id'], $newCarIds) ? 1 : 0;
     }
     
-    $stmt->bindValue(':limit', $itemsPerPage, PDO::PARAM_INT);
-    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-    $stmt->execute();
-    $cars = $stmt->fetchAll();
-    
-    // Statistiques pour le catalogue
+    // Statistiques pour le catalogue (basées sur toutes les voitures publiées, pas les filtres)
     $statsQuery = $pdo->query("
         SELECT 
             COUNT(*) as total_cars,
@@ -116,12 +198,22 @@ function catalog()
         'total_pages' => $totalPages,
         'total_items' => $totalCars,
         'items_per_page' => $itemsPerPage,
-        'start_item' => $offset + 1,
+        'start_item' => $totalCars > 0 ? $offset + 1 : 0,
         'end_item' => min($offset + $itemsPerPage, $totalCars),
         'has_previous' => $page > 1,
         'has_next' => $page < $totalPages,
         'previous_page' => max(1, $page - 1),
         'next_page' => min($totalPages, $page + 1)
+    ];
+    
+    // Préparer les filtres actuels pour les passer à la vue
+    $currentFilters = [
+        'search' => $searchTerm,
+        'fuel' => $fuelFilter,
+        'price' => $priceFilter,
+        'category' => $categoryFilter,
+        'theme' => $themeFilter,
+        'sort' => $sortFilter
     ];
     
     $data = [
@@ -131,7 +223,8 @@ function catalog()
         'categories' => $categories,
         'themes' => $themes,
         'priceRanges' => $priceRanges,
-        'pagination' => $pagination
+        'pagination' => $pagination,
+        'currentFilters' => $currentFilters
     ];
     
     render('catalog/catalog.php', $data);

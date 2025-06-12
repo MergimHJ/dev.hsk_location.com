@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Présentation Site Location Voitures</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .presentation-container {
+            width: 90%;
+            max-width: 900px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            padding: 60px 50px;
+            min-height: 600px;
+            position: relative;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        .slide h1 {
+            color: #1e3c72;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 3px solid #ff6b35;
+            padding-bottom: 15px;
+        }
+
+        .slide h2 {
+            color: #2a5298;
+            font-size: 2em;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .slide h3 {
+            color: #ff6b35;
+            font-size: 1.4em;
+            margin: 20px 0 10px 0;
+        }
+
+        .slide p, .slide li {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .slide ul {
+            margin-left: 20px;
+        }
+
+        .hero-section {
+            text-align: center;
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            color: white;
+            padding: 80px 20px;
+            margin: -60px -50px 40px -50px;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+
+        .hero-section h1 {
+            color: white;
+            border: none;
+            font-size: 3em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-section p {
+            font-size: 1.3em;
+            margin-top: 20px;
+            opacity: 0.9;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .feature-box {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 5px solid #ff6b35;
+            margin-bottom: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #ff6b35;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            background: rgba(255,255,255,0.9);
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-btn {
+            background: #1e3c72;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: #ff6b35;
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.active {
+            background: #ff6b35;
+        }
+
+        .slide-number {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: #ff6b35;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .architecture-diagram {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .architecture-diagram pre {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #2a5298;
+            font-weight: bold;
+        }
+
+        .competitive-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .competitive-table th,
+        .competitive-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .competitive-table th {
+            background: #1e3c72;
+            color: white;
+        }
+
+        .competitive-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 40px 30px;
+            }
+            
+            .hero-section {
+                margin: -40px -30px 30px -30px;
+                padding: 60px 20px;
+            }
+            
+            .two-column {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .slide h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Slide 1: Page de titre -->
+        <div class="slide active">
+            <div class="slide-number">1/6</div>
+            <div class="hero-section">
+                <h1>🏎️ EXO RENT</h1>
+                <p>Location de voitures sportives et de luxe</p>
+                <p style="font-size: 1em; margin-top: 30px;">Présentation du concept et de l'expérience utilisateur</p>
+            </div>
+            <div style="text-align: center; margin-top: 40px;">
+                <p style="font-size: 1.2em; color: #666;"><strong>Projet :</strong> Site web de location automobile haut de gamme</p>
+                <p style="font-size: 1.1em; color: #666; margin-top: 10px;"><strong>Focus :</strong> Sport, Luxe & Événementiel</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: Vision et Objectifs -->
+        <div class="slide">
+            <div class="slide-number">2/6</div>
+            <h1>Vision & Objectifs</h1>
+            
+            <div class="feature-box">
+                <h3>🎯 Mission</h3>
+                <p>Proposer des voitures de sport et de luxe en location avec une expérience utilisateur exceptionnelle, orientée vers la passion automobile et l'événementiel.</p>
+            </div>
+
+            <div class="two-column">
+                <div>
+                    <h3>🚗 Offre de service</h3>
+                    <ul>
+                        <li>Catalogue de véhicules sportifs et luxueux</li>
+                        <li>Location pour particuliers et professionnels</li>
+                        <li>Support événementiel (mariages, célébrations)</li>
+                        <li>Programme de fidélité avec avantages</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>✨ Valeurs clés</h3>
+                    <ul>
+                        <li><strong>Accessibilité</strong> - Interface intuitive</li>
+                        <li><strong>Confiance</strong> - Sélection rigoureuse</li>
+                        <li><strong>Convivialité</strong> - Service personnalisé</li>
+                        <li><strong>Dynamisme</strong> - Passion automobile</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Personas Utilisateurs -->
+        <div class="slide">
+            <div class="slide-number">3/6</div>
+            <h1>Personas Utilisateurs</h1>
+            
+            <div class="two-column">
+                <div class="feature-box">
+                    <h3>👤 Particulier Passionné</h3>
+                    <p><strong>Âge :</strong> 20-45 ans</p>
+                    <p><strong>Profession :</strong> Variée</p>
+                    <p><strong>Besoin :</strong> Louer une voiture de sport pour le plaisir, seul ou entre amis, pour des occasions spéciales ou des moments de détente.</p>
+                    <p><strong>Comportement :</strong> Recherche rapide, utilisation mobile/desktop, veut du "direct au but".</p>
+                </div>
+                
+                <div class="feature-box">
+                    <h3>🎭 Professionnel Événementiel</h3>
+                    <p><strong>Âge :</strong> 25-60 ans</p>
+                    <p><strong>Profession :</strong> Organisateur d'événements</p>
+                    <p><strong>Besoin :</strong> Location de véhicules pour mariages, fêtes et événements corporatifs.</p>
+                    <p><strong>Comportement :</strong> Expert du domaine, recherche l'efficacité et la fiabilité.</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px; text-align: center; background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                <h3>🌍 Accessibilité universelle</h3>
+                <p>Interface multilingue, responsive, accessible aux débutants comme aux experts</p>
+            </div>
+        </div>
+
+        <!-- Slide 4: Analyse Concurrentielle -->
+        <div class="slide">
+            <div class="slide-number">4/6</div>
+            <h1>Analyse Concurrentielle</h1>
+            
+            <table class="competitive-table">
+                <thead>
+                    <tr>
+                        <th>Concurrent</th>
+                        <th>Points Forts</th>
+                        <th>Points Faibles</th>
+                        <th>Performance Mobile</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>location-voiture-bruxelles.be</strong></td>
+                        <td>Intuitif, responsive</td>
+                        <td>Design simpliste, images mal proportionnées</td>
+                        <td>68/100</td>
+                    </tr>
+                    <tr>
+                        <td><strong>luxury-club.fr</strong></td>
+                        <td>Choix par occasion, contenu riche</td>
+                        <td>Trop chargé, lisibilité difficile</td>
+                        <td>51/100</td>
+                    </tr>
+                    <tr>
+                        <td><strong>emperarent.com</strong></td>
+                        <td>Rapide, direct</td>
+                        <td>Images faibles, couleurs hasardeuses</td>
+                        <td>49/100</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="feature-box" style="margin-top: 30px;">
+                <h3>🎯 Notre Opportunité</h3>
+                <p>Créer une expérience qui combine <strong>performance technique</strong>, <strong>design moderne</strong> et <strong>intuitivité</strong>, là où nos concurrents échouent sur au moins un de ces aspects.</p>
+            </div>
+        </div>
+
+        <!-- Slide 5: Architecture & Navigation -->
+        <div class="slide">
+            <div class="slide-number">5/6</div>
+            <h1>Architecture & Navigation</h1>
+            
+            <div class="architecture-diagram">
+                <h3>Structure du site</h3>
+                <pre>
+                        Page d'accueil
+                              |
+                              |
+                +-------------+------------+
+                |                          |
+            Services                   Contact
+                |
+                |
+   +------------+------------+
+   |            |            |
+Voiture 1    Voiture 2    Voiture 3
+   |            |            |
+   +------------+------------+                   
+                |
+           Page détails
+                </pre>
+            </div>
+
+            <div class="two-column">
+                <div>
+                    <h3>🎨 Ambiance Visuelle</h3>
+                    <ul>
+                        <li>Design coloré inspiré du sport automobile</li>
+                        <li>Photos de véhicules sous leur meilleur angle</li>
+                        <li>Instructions visuelles claires</li>
+                        <li>Interface intuitive et moderne</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>⚡ Expérience Utilisateur</h3>
+                    <ul>
+                        <li>Navigation simple et directe</li>
+                        <li>Recherche rapide et efficace</li>
+                        <li>Responsive design (mobile-first)</li>
+                        <li>Temps de chargement optimisé</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Prochaines Étapes -->
+        <div class="slide">
+            <div class="slide-number">6/6</div>
+            <h1>Développement & Perspectives</h1>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">🎯</div>
+                    <h3>Objectif Performance</h3>
+                    <p>Score mobile > 80</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">🚀</div>
+                    <h3>Évolutivité</h3>
+                    <p>Site conçu pour durer</p>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">🌟</div>
+                    <h3>Fidélisation</h3>
+                    <p>Programme d'avantages</p>
+                </div>
+            </div>
+
+            <div class="feature-box" style="margin-top: 40px;">
+                <h3>📋 Prochaines étapes</h3>
+                <ul>
+                    <li><strong>Phase 1 :</strong> Finalisation des maquettes Figma et prototypage</li>
+                    <li><strong>Phase 2 :</strong> Développement technique avec focus performance</li>
+                    <li><strong>Phase 3 :</strong> Tests utilisateurs et optimisations</li>
+                    <li><strong>Phase 4 :</strong> Lancement et intégration système de réservation</li>
+                </ul>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px; padding: 30px; background: linear-gradient(45deg, #1e3c72, #2a5298); color: white; border-radius: 10px;">
+                <h2 style="color: white; margin-bottom: 15px;">🏁 Prêt à transformer la location automobile</h2>
+                <p style="color: #fff; opacity: 0.9;">Une expérience digitale à la hauteur de nos véhicules d'exception</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn active" onclick="goToSlide(0)">1</button>
+        <button class="nav-btn" onclick="goToSlide(1)">2</button>
+        <button class="nav-btn" onclick="goToSlide(2)">3</button>
+        <button class="nav-btn" onclick="goToSlide(3)">4</button>
+        <button class="nav-btn" onclick="goToSlide(4)">5</button>
+        <button class="nav-btn" onclick="goToSlide(5)">6</button>
+        <button class="nav-btn" onclick="prevSlide()">←</button>
+        <button class="nav-btn" onclick="nextSlide()">→</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const navButtons = document.querySelectorAll('.nav-btn');
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            navButtons[currentSlide].classList.remove('active');
+            
+            currentSlide = n;
+            if (currentSlide >= slides.length) currentSlide = 0;
+            if (currentSlide < 0) currentSlide = slides.length - 1;
+            
+            slides[currentSlide].classList.add('active');
+            navButtons[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        function goToSlide(n) {
+            showSlide(n);
+        }
+
+        // Navigation au clavier
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        // Auto-navigation (optionnel)
+        // setInterval(nextSlide, 10000); // Change slide every 10 seconds
+    </script>
+</body>
+</html>
